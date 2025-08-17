@@ -1,0 +1,8 @@
+{"session_id": "session_id_20250817_110147_66339ac9", "session_path": "d:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250817_110147_66339ac9", "timestamp": "2025-08-17T11:01:47.980303Z", "level": "Dataset Handler initialized"}
+{"session_id": "session_id_20250817_110247_2b69c89c", "session_path": "d:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250817_110247_2b69c89c", "timestamp": "2025-08-17T11:02:47.941638Z", "level": "Dataset Handler initialized"}
+{"error": "'str' object has no attribute 'name'", "timestamp": "2025-08-17T11:02:47.945637Z", "level": "Error saving CSV"}
+{"session_id": "session_id_20250817_110256_836bcf9b", "session_path": "d:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250817_110256_836bcf9b", "timestamp": "2025-08-17T11:02:56.595603Z", "level": "Dataset Handler initialized"}
+{"session_id": "session_id_20250817_110420_cc886782", "session_path": "d:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250817_110420_cc886782", "timestamp": "2025-08-17T11:04:20.101331Z", "level": "Dataset Handler initialized"}
+{"error": "name 'pd' is not defined", "timestamp": "2025-08-17T11:04:20.104331Z", "level": "Error saving CSV"}
+{"session_id": "session_id_20250817_110626_bacedd5b", "session_path": "d:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250817_110626_bacedd5b", "timestamp": "2025-08-17T11:06:26.315206Z", "level": "Dataset Handler initialized"}
+{"filename": "Data_Train.csv", "save_path": "d:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250817_110626_bacedd5b\\Data_Train.csv", "session_id": "session_id_20250817_110626_bacedd5b", "timestamp": "2025-08-17T11:06:26.376739Z", "level": "CSV saved successfully"}

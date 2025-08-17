@@ -13,4 +13,5 @@ plotly
 pycaret
 openpyxl
 ipykernel
+structlog
 -e .
