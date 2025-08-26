@@ -4,30 +4,42 @@ An automated machine learning (AutoML) framework built with Python that simplifi
 
 ## Features
 
-- **Data Ingestion**: Automated CSV file handling with session management
-- **Data Analysis**: Comprehensive dataset analysis capabilities
+- **Data Ingestion**: Automated CSV/Excel file handling with session management
+- **AI-Powered Data Type Analysis**: LLM-based intelligent data type inference and conversion
+- **Multi-LLM Support**: Integration with Google Gemini and Groq models
 - **Custom Logging**: Structured logging with JSON output and file/console handlers
 - **Exception Handling**: Custom exception handling with detailed error tracking
 - **Session Management**: Unique session IDs for data isolation and tracking
+- **Configuration Management**: YAML-based configuration system
 
 ## Project Structure
 
 ```
 automl/
 ├── app/
-│   └── main.py                 # Main application entry point
+│   └── main.py                     # Main application entry point
 ├── src/
 │   ├── datasetAnalysis/
-│   │   ├── data_ingestion.py   # Dataset handling and CSV processing
-│   │   └── data_analysis.py    # Data analysis functionality
-│   └── dataCleaning/           # Data cleaning modules
+│   │   ├── data_ingestion.py       # Dataset handling and CSV/Excel processing
+│   │   └── data_type_analysis.py   # AI-powered data type analysis
+│   └── dataCleaning/               # Data cleaning modules
+├── model/
+│   └── models.py                   # Pydantic models for data validation
+├── utils/
+│   ├── model_loader.py             # LLM and embedding model loader
+│   └── config_loader.py            # Configuration management
+├── Propmt/
+│   └── propmt_lib.py               # LLM prompt templates
+├── config/
+│   └── config.yml                  # Application configuration
 ├── logger/
-│   └── customlogger.py         # Custom structured logging
+│   └── customlogger.py             # Custom structured logging
 ├── expection/
-│   └── customExpection.py      # Custom exception handling
-├── data/                       # Data storage directory
-├── logs/                       # Application logs
-└── requirements.txt            # Project dependencies
+│   └── customExpection.py          # Custom exception handling
+├── data/                           # Data storage directory
+├── logs/                           # Application logs
+├── .env                            # Environment variables
+└── requirements.txt                # Project dependencies
 ```
 
 ## Installation
@@ -56,7 +68,11 @@ pip install -e .
 - **XGBoost, LightGBM, CatBoost**: Advanced ML algorithms
 - **PyCaret**: Low-code ML library
 - **Matplotlib, Seaborn, Plotly**: Data visualization
+- **LangChain**: LLM framework and integrations
+- **Google Generative AI & Groq**: LLM providers
+- **Pydantic**: Data validation and parsing
 - **Structlog**: Structured logging
+- **PyYAML**: Configuration file parsing
 
 ## Usage
 
@@ -68,9 +84,28 @@ from src.datasetAnalysis.data_ingestion import datasetHandler
 # Initialize handler
 handler = datasetHandler()
 
-# Load CSV file
+# Load CSV/Excel file
 df = handler.save_dataset(uploaded_file)
 print(df.head())
+```
+
+### AI-Powered Data Type Analysis
+
+```python
+from src.datasetAnalysis.data_type_analysis import DataTypeAnalyzer
+
+# Initialize analyzer
+analyzer = DataTypeAnalyzer("path/to/dataset.csv")
+
+# Get AI recommendations for data types
+recommendations = analyzer.analyze_data_type()
+
+# Generate conversion code
+code = analyzer.generate_conversion_code(recommendations)
+print(code)
+
+# Apply conversions
+converted_df = analyzer.apply_conversions(df, recommendations)
 ```
 
 ### Custom Logging
@@ -119,11 +154,40 @@ except Exception as e:
 - **Integration**: Works seamlessly with the custom logger
 - **Debugging**: Provides comprehensive error information
 
+### AI Data Type Analyzer
+
+- **LLM Integration**: Uses Google Gemini or Groq models for intelligent analysis
+- **Smart Inference**: Analyzes sample data to recommend optimal data types
+- **Code Generation**: Automatically generates pandas conversion code
+- **Multi-format Support**: Handles CSV and Excel files
+- **Validation**: Uses Pydantic models for structured output
+
 ## Configuration
 
 ### Environment Variables
 
 - `DATA_STORAGE_PATH`: Custom data storage directory (default: `./data/datasetAnalysis`)
+- `GROQ_API_KEY`: API key for Groq LLM services
+- `GOOGLE_API_KEY`: API key for Google Generative AI
+- `LLM_PROVIDER`: Choose LLM provider ("google" or "groq", default: "google")
+
+### Configuration File
+
+The `config/config.yml` file contains LLM settings:
+
+```yaml
+llm:
+  google:
+    provider: "google"
+    model_name: "gemini-2.0-flash"
+    temperature: 0.0
+    max_output_tokens: 2048
+  groq:
+    provider: "groq"
+    model_name: "deepseek-r1-distill-llama-70b"
+    temperature: 0.0
+    max_output_tokens: 2048
+```
 
 ### Default Paths
 
@@ -138,7 +202,24 @@ except Exception as e:
 ```bash
 # Run the data ingestion test
 python src/datasetAnalysis/data_ingestion.py
+
+# Run the data type analysis test
+python src/datasetAnalysis/data_type_analysis.py
+
+# Test model loader
+python utils/model_loader.py
 ```
+
+### Environment Setup
+
+1. Create a `.env` file in the project root:
+```bash
+GROQ_API_KEY=your_groq_api_key_here
+GOOGLE_API_KEY=your_google_api_key_here
+LLM_PROVIDER=google
+```
+
+2. Configure your preferred LLM settings in `config/config.yml`
 
 ### Adding New Features
 
