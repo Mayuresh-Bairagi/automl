@@ -14,4 +14,7 @@ pycaret
 openpyxl
 ipykernel
 structlog
+langchain
+langchain_community
+langchain_google_genai
 -e .

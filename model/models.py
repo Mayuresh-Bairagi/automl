@@ -1,0 +1,13 @@
+from pydantic import BaseModel , RootModel
+from typing import List , Union, Literal
+from enum import Enum
+
+
+class ColumnRecommendation(BaseModel):
+    column_name: str
+    current_dtype: str
+    suggested_dtype: Literal["string", "integer", "float", "date", "boolean"]
+    reason: str
+
+class DataTypeRecommendation(BaseModel):
+    columns: List[ColumnRecommendation]
