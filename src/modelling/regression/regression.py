@@ -14,10 +14,12 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 import xgboost as xgb
+from sklearn.datasets import load_diabetes, fetch_california_housing
 
 # Import custom exception and logger
-from expection.customExpection import AutoML_Exception
-from logger.customlogger import CustomLogger
+from automl.expection.customExpection import AutoML_Exception
+from automl.logger.customlogger import CustomLogger
+
 
 
 # --- Safe MAPE implementation ---
@@ -200,14 +202,11 @@ class AutoMLRegressor:
 
 if __name__ == "__main__":
     try:
-        # Example dummy test
-        df = pd.DataFrame({
-            "x1": np.random.rand(100),
-            "x2": np.random.rand(100),
-            "y": np.random.rand(100)
-        })
+        housing = fetch_california_housing(as_frame=True)
+        df = housing.frame
+        target = housing.target.name
         automl = AutoMLRegressor()
-        meta, results = automl.fit(df, "y")
+        meta, results = automl.fit(df, target)
         print(json.dumps(meta, indent=4))
     except Exception as e:
         raise AutoML_Exception(e)

@@ -1,7 +1,7 @@
 
 import sys 
 import traceback
-from logger.customlogger import CustomLogger
+from automl.logger.customlogger import CustomLogger
 
 
 

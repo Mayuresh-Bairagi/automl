@@ -1,0 +1,16 @@
+{
+    "model": "XGBRegressor",
+    "best_params": {
+        "model__learning_rate": 0.2,
+        "model__max_depth": 5,
+        "model__n_estimators": 100
+    },
+    "metrics": {
+        "r2": 0.8299338956919441,
+        "mae": 0.3132911945291222,
+        "rmse": 0.4720764238761874,
+        "mape": 0.1822975127405259
+    },
+    "download_path": "D:\\coding\\AutoML_Model\\automl\\src\\modelling\\regression\\RegressionModels\\XGBRegressor_a54f028a.joblib",
+    "model_id": "a54f028a"
+}
