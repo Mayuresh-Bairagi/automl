@@ -5,7 +5,7 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings , ChatGoogleGene
 from utils.config_loader import load_config
 from langchain_groq import ChatGroq
 from logger.customlogger import CustomLogger
-from exception.customexpection import DocumentPortalException
+from expection.customExpection import AutoML_Exception
 
 log = CustomLogger().get_logger(__name__)
 
@@ -22,7 +22,7 @@ class ModelLoader:
         missing = [k for k,v in self.api_keys.items() if not v]
         if missing:
             log.error(f"Missing required environment variables: {missing}",missing_var = missing)
-            raise DocumentPortalException(f"Missing required environment variables: {missing}",sys)
+            raise AutoML_Exception(f"Missing required environment variables: {missing}",sys)
 
         log.info("Environment variables validated successfully", available_keys = list(self.api_keys.keys())) 
 
@@ -33,17 +33,17 @@ class ModelLoader:
             return GoogleGenerativeAIEmbeddings(model=model_name)
         except Exception as e:
             log.error(f"Error loading embeddings:",error = str(e))
-            raise DocumentPortalException(f"Error loading embeddings: {e}", sys)
+            raise AutoML_Exception(f"Error loading embeddings: {e}", sys)
 
     def load_llm(self):
         llm_block = self.config["llm"]
         log.info("Loading LLM")
 
-        provider_key = os.getenv("LLM_PROVIDER","groq")
+        provider_key = os.getenv("LLM_PROVIDER","google")
 
         if provider_key not in llm_block:
             log.error(f"LLM provider {provider_key} not found in config",provider_key=provider_key)
-            raise DocumentPortalException(f"Provider {provider_key} not found in LLM configuration", sys)
+            raise AutoML_Exception(f"Provider {provider_key} not found in LLM configuration", sys)
 
         llm_config = llm_block[provider_key]
         provider = llm_config.get("provider")
@@ -76,8 +76,6 @@ class ModelLoader:
 if __name__ == "__main__":
     ml = ModelLoader() 
 
-    embeddings = ml.load_embeddings()
-    print(f"Embeddings loaded: {embeddings}")
 
     llm = ml.load_llm()
     print(f"LLM loaded: {llm}")

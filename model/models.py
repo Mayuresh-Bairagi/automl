@@ -6,7 +6,8 @@ from enum import Enum
 class ColumnRecommendation(BaseModel):
     column_name: str
     current_dtype: str
-    suggested_dtype: Literal["string", "integer", "float", "date", "boolean"]
+    sample_values : list
+    suggested_dtype: Literal["object", "integer", "float", "date", "boolean"]
     reason: str
 
 class DataTypeRecommendation(BaseModel):
