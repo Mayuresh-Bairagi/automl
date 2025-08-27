@@ -30,8 +30,47 @@ Input metadata:
 
 
 
+feature_engineering_prompt = ChatPromptTemplate.from_template("""
+You are a Python expert in Pandas feature engineering.  
+You are given a DataFrame called `converted_df` and column metadata: {meta_data}  
+
+For each column, decide if feature engineering is needed and return strictly in this schema:  
+{return_instructions}  
+
+Rules:  
+1. Numeric values with units (e.g., "15 kg", "5 g"):  
+   - Convert to float in a **common base unit** (SI preferred).  
+   - New column: `<colname>_value`.  
+
+2. Durations (e.g., "2h 50min", "00:15:30"):  
+   - Convert to **total minutes**.  
+   - New column: `<colname>_minutes`.  
+
+3. Structured text (e.g., "12 items left", "Red-Blue"):  
+   - Extract meaningful **numeric/categorical features**.  
+
+4. Already-clean columns:  
+   - No code needed, keep `remake="no"`.  
+
+Constraints:  
+- `remake="yes"` only if code is generated, else `"no"`.  
+- `code` must contain valid Python code (empty if `remake="no"`).  
+- Code must modify `converted_df` in-place.  
+- Use vectorized Pandas operations only (no row-wise loops).  
+- Must handle missing/irregular values robustly.  
+- Generalize logic so it works on unseen values.
+- Always make sure to import the library that you are using in the code.
+
+Examples:  
+- "Weight": ["15 kg","5 g"] → new col `Weight_value` = [15, 0.005] (kg base).  
+- "Duration": ["2h 50min"] → new col `Duration_minutes` = [170].  
+- "Cake" (categorical) → remake="no", code="".  
+""")
+
+
 
 
 PROMPT_REGISTRY = {
-    'change_data_type': change_data_type
+    'change_data_type': change_data_type,
+    'feature_engineering' : feature_engineering_prompt
 }

@@ -32,7 +32,7 @@ class DataTypeAnalyzer:
             self.log.info("Data type analysis initialized successfully")
 
         except Exception as e:
-            self.log.error(f"Error initializing data type analysis: {e}")
+            self.log.error(f"Error initializing data type analysis ",error = e)
             raise AutoML_Exception(f"Error initializing data type analysis: {e}")
 
     def get_column_info(self, df, sample_size=5):
@@ -126,5 +126,6 @@ if __name__ == "__main__":
     # Apply conversions directly
     converted_df = analyzer.apply_conversions(analyzer.df, recommendations)
     print("Converted DataFrame (head)")
-    print(converted_df.head())
+    print(converted_df.info())
+    #print(converted_df.head())
 
