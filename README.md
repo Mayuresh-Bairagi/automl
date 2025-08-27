@@ -6,6 +6,7 @@ An automated machine learning (AutoML) framework built with Python that simplifi
 
 - **Data Ingestion**: Automated CSV/Excel file handling with session management
 - **AI-Powered Data Type Analysis**: LLM-based intelligent data type inference and conversion
+- **Feature Engineering**: Automated feature extraction from structured text and numeric data with units
 - **Multi-LLM Support**: Integration with Google Gemini and Groq models
 - **Custom Logging**: Structured logging with JSON output and file/console handlers
 - **Exception Handling**: Custom exception handling with detailed error tracking
@@ -108,6 +109,30 @@ print(code)
 converted_df = analyzer.apply_conversions(df, recommendations)
 ```
 
+### Feature Engineering
+
+```python
+from Propmt.propmt_lib import PROMPT_REGISTRY
+from utils.model_loader import ModelLoader
+
+# Initialize components for feature engineering
+loader = ModelLoader()
+llm = loader.load_llm()
+feature_prompt = PROMPT_REGISTRY['feature_engineering']
+
+# Generate feature engineering code
+chain = feature_prompt | llm
+response = chain.invoke({
+    'meta_data': column_metadata,
+    'return_instructions': parser.get_format_instructions()
+})
+
+# Apply feature engineering transformations
+# Generated code will create new columns like:
+# - Weight_value (from "15 kg" → 15.0)
+# - Duration_minutes (from "2h 30min" → 150)
+```
+
 ### Custom Logging
 
 ```python
@@ -161,6 +186,14 @@ except Exception as e:
 - **Code Generation**: Automatically generates pandas conversion code
 - **Multi-format Support**: Handles CSV and Excel files
 - **Validation**: Uses Pydantic models for structured output
+
+### Feature Engineering Engine
+
+- **Unit Conversion**: Extracts numeric values from text with units (e.g., "15 kg" → 15.0)
+- **Duration Processing**: Converts time expressions to minutes (e.g., "2h 30min" → 150)
+- **Structured Text Parsing**: Extracts meaningful features from complex text patterns
+- **Vectorized Operations**: Uses efficient pandas operations for data transformation
+- **Robust Handling**: Manages missing and irregular values gracefully
 
 ## Configuration
 
