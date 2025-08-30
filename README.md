@@ -4,9 +4,10 @@ An automated machine learning (AutoML) framework built with Python that simplifi
 
 ## Features
 
+- **FastAPI Web Application**: RESTful API for file upload and processing
 - **Data Ingestion**: Automated CSV/Excel file handling with session management
 - **AI-Powered Data Type Analysis**: LLM-based intelligent data type inference and conversion
-- **Feature Engineering**: Automated feature extraction from structured text and numeric data with units
+- **Automated Feature Engineering**: Complete pipeline for feature extraction and datetime processing
 - **Multi-LLM Support**: Integration with Google Gemini and Groq models
 - **Custom Logging**: Structured logging with JSON output and file/console handlers
 - **Exception Handling**: Custom exception handling with detailed error tracking
@@ -23,7 +24,8 @@ automl/
 │   ├── datasetAnalysis/
 │   │   ├── data_ingestion.py       # Dataset handling and CSV/Excel processing
 │   │   └── data_type_analysis.py   # AI-powered data type analysis
-│   └── dataCleaning/               # Data cleaning modules
+│   └── dataCleaning/
+│       └── featureEngineering01.py # Automated feature engineering pipeline
 ├── model/
 │   └── models.py                   # Pydantic models for data validation
 ├── utils/
@@ -112,25 +114,34 @@ converted_df = analyzer.apply_conversions(df, recommendations)
 ### Feature Engineering
 
 ```python
-from Propmt.propmt_lib import PROMPT_REGISTRY
-from utils.model_loader import ModelLoader
+from src.dataCleaning.featureEngineering01 import FeatureEngineer1
 
-# Initialize components for feature engineering
-loader = ModelLoader()
-llm = loader.load_llm()
-feature_prompt = PROMPT_REGISTRY['feature_engineering']
+# Initialize with dataset path or DataFrame
+fe = FeatureEngineer1("path/to/dataset.csv")
+# or
+fe = FeatureEngineer1(dataframe)
 
-# Generate feature engineering code
-chain = feature_prompt | llm
-response = chain.invoke({
-    'meta_data': column_metadata,
-    'return_instructions': parser.get_format_instructions()
-})
+# Generate features automatically
+processed_df, session_id = fe.generate_features()
 
-# Apply feature engineering transformations
-# Generated code will create new columns like:
+# Features automatically created:
+# - Datetime columns → day, month, weekday, hour, minute
+# - Object columns → LLM-generated feature extraction
 # - Weight_value (from "15 kg" → 15.0)
 # - Duration_minutes (from "2h 30min" → 150)
+```
+
+### FastAPI Web Application
+
+```python
+# Start the web server
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# Upload and process files via API
+curl -X POST "http://localhost:8000/upload" \
+     -H "accept: application/json" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@your_dataset.csv"
 ```
 
 ### Custom Logging
@@ -187,13 +198,22 @@ except Exception as e:
 - **Multi-format Support**: Handles CSV and Excel files
 - **Validation**: Uses Pydantic models for structured output
 
-### Feature Engineering Engine
+### Automated Feature Engineering Pipeline
 
+- **Complete Automation**: End-to-end feature engineering from raw data to processed features
+- **Datetime Processing**: Automatically extracts day, month, weekday, hour, minute from date columns
+- **LLM-Powered Object Analysis**: Uses AI to generate custom feature extraction code for text columns
 - **Unit Conversion**: Extracts numeric values from text with units (e.g., "15 kg" → 15.0)
 - **Duration Processing**: Converts time expressions to minutes (e.g., "2h 30min" → 150)
-- **Structured Text Parsing**: Extracts meaningful features from complex text patterns
-- **Vectorized Operations**: Uses efficient pandas operations for data transformation
-- **Robust Handling**: Manages missing and irregular values gracefully
+- **Session Management**: Saves both raw and processed data with unique session IDs
+- **Robust Error Handling**: Comprehensive logging and exception management
+
+### FastAPI Web Application
+
+- **RESTful API**: Upload CSV/Excel files and get processed results
+- **CORS Support**: Cross-origin requests enabled for web frontends
+- **File Validation**: Supports CSV and Excel file formats
+- **JSON Response**: Returns processed data preview and session ID
 
 ## Configuration
 
@@ -230,6 +250,15 @@ llm:
 
 ## Development
 
+### Running the Application
+
+```bash
+# Start the FastAPI web server
+python app/main.py
+# or
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
 ### Running Tests
 
 ```bash
@@ -238,6 +267,9 @@ python src/datasetAnalysis/data_ingestion.py
 
 # Run the data type analysis test
 python src/datasetAnalysis/data_type_analysis.py
+
+# Test feature engineering pipeline
+python src/dataCleaning/featureEngineering01.py
 
 # Test model loader
 python utils/model_loader.py

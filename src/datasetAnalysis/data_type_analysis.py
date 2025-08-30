@@ -11,7 +11,7 @@ from typing import List, Dict
 
 
 class DataTypeAnalyzer:
-    def __init__(self, dataset_path):
+    def __init__(self, dataset):
         self.log = CustomLogger().get_logger(__name__)
         try:
             self.loader = ModelLoader()
@@ -21,13 +21,7 @@ class DataTypeAnalyzer:
             self.fixing_parser = OutputFixingParser.from_llm(parser=self.parser, llm=self.llm)
 
             self.propmt = PROMPT_REGISTRY['change_data_type']
-
-            self.file_path = Path(dataset_path)
-            ext = self.file_path.suffix.lower()
-            if ext == ".csv":
-                self.df = pd.read_csv(self.file_path)
-            elif ext in [".xls", ".xlsx"]:
-                self.df = pd.read_excel(self.file_path)
+            self.df = dataset
 
             self.log.info("Data type analysis initialized successfully")
 

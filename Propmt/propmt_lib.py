@@ -13,7 +13,7 @@ Guidelines:
    - Decimals or scientific notation (e.g., "12.5", "1e-5") → float.  
    - Currency/percent (e.g., "$100", "75%") → float.  
    - Dates/times (e.g., "2020-01-01", "1 Jan 2020", "12/05/22", "2022-05-12 10:30") → date.  
-   - Durations (e.g., "1h 20min", "5 days", "00:15:30") → date (time/duration).  
+   - Durations (e.g., "1h 20min", "5 days", "00:15:30") → object (as it's in string).  
    - True/False, Yes/No, Y/N, 0/1 → boolean.  
    - Mixed numeric + text (e.g., "12kg", "5ft", "abc123") → object.  
    - IDs, phone numbers, zip codes, account numbers → object (even if numeric).  

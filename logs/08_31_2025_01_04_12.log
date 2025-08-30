@@ -1,0 +1,7 @@
+{"timestamp": "2025-08-30T19:34:30.504908Z", "level": "Initializing FeatureEngineer1..."}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-08-30T19:34:30.544047Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-08-30T19:34:30.553594Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-08-30T19:34:30.555589Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-08-30T19:34:30.558192Z", "level": "Loading LLM"}
+{"timestamp": "2025-08-30T19:34:30.706472Z", "level": "LLM model loaded successfully"}
+{"error": "expected str, bytes or os.PathLike object, not BytesIO", "timestamp": "2025-08-30T19:34:30.707987Z", "level": "Error while initializing FeatureEngineer1"}
