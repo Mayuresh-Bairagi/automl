@@ -11,6 +11,7 @@ from Propmt.propmt_lib import PROMPT_REGISTRY
 from typing import List, Dict, Union
 from src.datasetAnalysis.data_type_analysis import DataTypeAnalyzer
 from src.datasetAnalysis.data_ingestion import datasetHandler
+import numpy as np
 
 
 class FeatureEngineer1:
@@ -108,7 +109,7 @@ class FeatureEngineer1:
                     if response.get('remake') == 'yes':
                         self.log.info("Remaking column using generated code", column=col)
                         clean_code = response['code'].replace("import pandas as pd", "").replace("import re", "")
-                        exec_globals = {"pd": pd, "re": re}
+                        exec_globals = {"pd": pd, "re": re,"np" :np}
                         exec_locals = {"converted_df": self.converted_df}
                         exec(clean_code, exec_globals, exec_locals)
                         self.converted_df.drop(columns=[col], inplace=True)
@@ -119,7 +120,7 @@ class FeatureEngineer1:
                 else:
                     self.log.info("Skipping column (no special handling)", column=col)
 
-            # Save processed data
+            
             self.handler = datasetHandler(session_id=self.session_id)
             self.handler.save_dataset(self.converted_df, "processed_file.csv")
             self.log.info("Processed data saved successfully", path=self.handler.session_path)

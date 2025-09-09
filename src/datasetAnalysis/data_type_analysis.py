@@ -22,6 +22,8 @@ class DataTypeAnalyzer:
 
             self.propmt = PROMPT_REGISTRY['change_data_type']
             self.df = dataset
+            
+            self.df = self.df.dropna().drop_duplicates()
 
             self.log.info("Data type analysis initialized successfully")
 
