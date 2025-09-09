@@ -19,4 +19,5 @@ langchain_community
 langchain_google_genai
 langchain_groq
 python-multipart
+
 -e .

@@ -126,6 +126,7 @@ class FeatureEngineer1:
             self.log.info("Processed data saved successfully", path=self.handler.session_path)
 
             self.log.info("Feature generation completed successfully")
+            self.converted_df = self.converted_df.dropna().drop_duplicates()
             return self.converted_df, self.session_id
 
         except Exception as e:
