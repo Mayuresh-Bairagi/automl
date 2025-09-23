@@ -1,0 +1,2 @@
+{"session_id": "session_id_20250923_175321_e395f0ad", "session_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250923_175321_e395f0ad", "timestamp": "2025-09-23T17:53:21.725879Z", "level": "Dataset Handler initialized"}
+{"filename": "raw_file.csv", "save_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250923_175321_e395f0ad\\raw_file.csv", "session_id": "session_id_20250923_175321_e395f0ad", "timestamp": "2025-09-23T17:53:21.761489Z", "level": "CSV saved successfully"}

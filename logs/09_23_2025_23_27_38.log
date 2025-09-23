@@ -1,0 +1,3 @@
+{"session_id": "session_id_20250923_175738_dc034553", "session_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250923_175738_dc034553", "timestamp": "2025-09-23T17:57:38.215128Z", "level": "Dataset Handler initialized"}
+{"folder": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250920_073532_a4f8a116", "timestamp": "2025-09-23T17:57:38.217309Z", "level": "Deleting old session folder"}
+{"filename": "raw_file.csv", "save_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250923_175738_dc034553\\raw_file.csv", "rows": 10683, "cols": 11, "session_id": "session_id_20250923_175738_dc034553", "timestamp": "2025-09-23T17:57:38.273037Z", "level": "CSV saved successfully"}
