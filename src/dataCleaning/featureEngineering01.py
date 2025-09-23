@@ -122,11 +122,11 @@ class FeatureEngineer1:
 
             
             self.handler = datasetHandler(session_id=self.session_id)
+            self.converted_df = self.converted_df.dropna().drop_duplicates()
             self.handler.save_dataset(self.converted_df, "processed_file.csv")
             self.log.info("Processed data saved successfully", path=self.handler.session_path)
 
             self.log.info("Feature generation completed successfully")
-            self.converted_df = self.converted_df.dropna().drop_duplicates()
             return self.converted_df, self.session_id
 
         except Exception as e:

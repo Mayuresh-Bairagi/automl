@@ -1,0 +1,17 @@
+{"timestamp": "2025-09-23T18:46:05.343300Z", "level": "Initializing FeatureEngineer1..."}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-09-23T18:46:05.345356Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-09-23T18:46:05.346778Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-09-23T18:46:05.346778Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-09-23T18:46:05.347786Z", "level": "Loading LLM"}
+{"timestamp": "2025-09-23T18:46:05.367284Z", "level": "LLM model loaded successfully"}
+{"dataset_shape": [10683, 11], "timestamp": "2025-09-23T18:46:05.435518Z", "level": "Loaded dataset from path: D:\\College\\Project\\automl\\data\\Data_Train.csv"}
+{"session_id": "session_id_20250923_184605_b6710ae3", "session_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250923_184605_b6710ae3", "timestamp": "2025-09-23T18:46:05.440445Z", "level": "Dataset Handler initialized"}
+{"folder": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250923_175321_e395f0ad", "timestamp": "2025-09-23T18:46:05.441446Z", "level": "Deleting old session folder"}
+{"filename": "raw_file.csv", "save_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250923_184605_b6710ae3\\raw_file.csv", "rows": 10683, "cols": 11, "session_id": "session_id_20250923_184605_b6710ae3", "timestamp": "2025-09-23T18:46:05.491202Z", "level": "CSV saved successfully"}
+{"session_id": "session_id_20250923_184605_b6710ae3", "timestamp": "2025-09-23T18:46:05.492131Z", "level": "datasetHandler initialized and raw data saved"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-09-23T18:46:05.495123Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-09-23T18:46:05.497199Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-09-23T18:46:05.497199Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-09-23T18:46:05.497199Z", "level": "Loading LLM"}
+{"timestamp": "2025-09-23T18:46:05.521122Z", "level": "Data type analysis initialized successfully"}
+{"timestamp": "2025-09-23T18:46:05.546216Z", "level": "Meta-data analysis chain initialized"}

@@ -1,0 +1,5 @@
+{"session_id": "session_id_20250923_184647_aee25535", "session_path": "d:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250923_184647_aee25535", "timestamp": "2025-09-23T18:56:04.036327Z", "level": "Dataset Handler initialized"}
+Pandas backend loaded 2.1.4
+Numpy backend loaded 1.26.4
+Pyspark backend NOT loaded
+Python backend loaded
