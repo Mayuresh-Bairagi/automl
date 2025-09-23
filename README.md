@@ -8,6 +8,7 @@ An automated machine learning (AutoML) framework built with Python that simplifi
 - **Data Ingestion**: Automated CSV/Excel file handling with session management
 - **AI-Powered Data Type Analysis**: LLM-based intelligent data type inference and conversion
 - **Automated Feature Engineering**: Complete pipeline for feature extraction and datetime processing
+- **Exploratory Data Analysis**: Automated HTML report generation with comprehensive data insights
 - **Multi-LLM Support**: Integration with Google Gemini and Groq models
 - **Custom Logging**: Structured logging with JSON output and file/console handlers
 - **Exception Handling**: Custom exception handling with detailed error tracking
@@ -24,8 +25,10 @@ automl/
 │   ├── datasetAnalysis/
 │   │   ├── data_ingestion.py       # Dataset handling and CSV/Excel processing
 │   │   └── data_type_analysis.py   # AI-powered data type analysis
-│   └── dataCleaning/
-│       └── featureEngineering01.py # Automated feature engineering pipeline
+│   ├── dataCleaning/
+│   │   └── featureEngineering01.py # Automated feature engineering pipeline
+│   └── data_dashboard/
+│       └── eda.py                  # Exploratory data analysis and HTML report generation
 ├── model/
 │   └── models.py                   # Pydantic models for data validation
 ├── utils/
@@ -71,6 +74,7 @@ pip install -e .
 - **XGBoost, LightGBM, CatBoost**: Advanced ML algorithms
 - **PyCaret**: Low-code ML library
 - **Matplotlib, Seaborn, Plotly**: Data visualization
+- **ydata-profiling**: Automated EDA report generation
 - **LangChain**: LLM framework and integrations
 - **Google Generative AI & Groq**: LLM providers
 - **Pydantic**: Data validation and parsing
@@ -144,6 +148,23 @@ curl -X POST "http://localhost:8000/upload" \
      -F "file=@your_dataset.csv"
 ```
 
+### Exploratory Data Analysis
+
+```python
+from src.data_dashboard.eda import EDA
+
+# Generate comprehensive EDA report
+eda = EDA(session_id="your_session_id")
+html_path = eda.generate_report()
+
+# Opens interactive HTML report with:
+# - Dataset overview and statistics
+# - Missing values analysis
+# - Correlation matrices
+# - Distribution plots
+# - Data quality insights
+```
+
 ### Custom Logging
 
 ```python
@@ -215,6 +236,14 @@ except Exception as e:
 - **File Validation**: Supports CSV and Excel file formats
 - **JSON Response**: Returns processed data preview and session ID
 
+### Exploratory Data Analysis
+
+- **Automated Report Generation**: Creates comprehensive HTML reports using ydata-profiling
+- **Interactive Visualizations**: Statistical summaries, correlation matrices, and distribution plots
+- **Data Quality Assessment**: Missing values, duplicates, and data type analysis
+- **Session Integration**: Works seamlessly with processed data from feature engineering
+- **Export Capability**: Generates standalone HTML files for sharing and presentation
+
 ## Configuration
 
 ### Environment Variables
@@ -270,6 +299,9 @@ python src/datasetAnalysis/data_type_analysis.py
 
 # Test feature engineering pipeline
 python src/dataCleaning/featureEngineering01.py
+
+# Test EDA report generation
+python src/data_dashboard/eda.py
 
 # Test model loader
 python utils/model_loader.py
