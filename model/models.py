@@ -16,3 +16,13 @@ class DataTypeRecommendation(BaseModel):
 class FeatureEngineering(BaseModel):
     remarke: Literal["yes", "no"]
     code: str
+
+
+class requestEDA(BaseModel):
+    session_id: str
+
+
+class TargetVariableRecommendation(BaseModel):
+    target_variable: str
+    problem_type: Literal["regression", "classification", "clustering"]
+    justification: str

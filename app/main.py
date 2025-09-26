@@ -1,9 +1,13 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File,HTTPException
+from pathlib import Path
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 from io import BytesIO
 from src.dataCleaning.featureEngineering01 import FeatureEngineer1
+from src.data_dashboard.eda import EDA
+from model.models import requestEDA
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -19,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+folder_path=  r'data\datasetAnalysis'
+app.mount("/data", StaticFiles(directory=folder_path), name="data")
 
 @app.get("/")
 async def root():
@@ -46,9 +52,22 @@ async def upload_file(file: UploadFile = File(...)):
         return {"filename": file.filename, "preview": preview,"session_id" : session_id}
 
     except Exception as e:
-        return {"error": str(e)}
+       raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.post("/eda")
+async def eda(request:requestEDA):
+    try:
+        session_id = request.session_id
+        eda_obj = EDA(session_id=session_id)
+        html_path = eda_obj.generate_report()
+        html_url = f"http://127.0.0.1:8000/data/{session_id}/index.html"
 
+        print(f"EDA report URL: {html_url}")
+        return {"session_id": session_id, "eda_html_path": html_url}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

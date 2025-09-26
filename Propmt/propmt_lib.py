@@ -28,8 +28,6 @@ Input metadata:
 """)
 
 
-
-
 feature_engineering_prompt = ChatPromptTemplate.from_template("""
 You are a Python expert in Pandas feature engineering.  
 You are given a DataFrame called `converted_df` and column metadata: {meta_data}  
@@ -68,9 +66,29 @@ Examples:
 """)
 
 
+target_variable_prompt = ChatPromptTemplate.from_template("""
+You are an AI assistant specialized in data analysis. Your task is to identify the most appropriate target variable in a dataset and recommend its problem type.
+   Problem Statement: {problem_statement}
+   Dataset Schema (Column Names): {columnnames}
+Instructions:
+   1. Carefully analyze all columns and the problem statement to identify the most suitable target variable.
+   2. If multiple columns could be targets, select the one most aligned with the problem objective.
+   3. Determine the problem type: "regression", "classification", or "clustering".
+      - "regression" → numeric target you want to predict.
+      - "classification" → categorical target you want to predict.
+      - "clustering" → no explicit target; suggest clustering only if no clear target exists.
+   4. Provide a brief justification for your choice.
+   5. Output the result strictly in the following schema:
+      {return_instructions}
+Additional Rules:
+   - Always pick exactly one column as the target.
+   - If the dataset does not have a clear target, set "problem_type": "clustering" and explain why.
+   - Do not include any text outside the schema.
+""")
 
 
 PROMPT_REGISTRY = {
     'change_data_type': change_data_type,
-    'feature_engineering' : feature_engineering_prompt
+    'feature_engineering' : feature_engineering_prompt,
+    'target_variable' : target_variable_prompt
 }

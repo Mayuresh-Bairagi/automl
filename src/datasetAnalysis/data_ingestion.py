@@ -65,9 +65,16 @@ class datasetHandler:
         folders = [f for f in parent.iterdir() if f.is_dir()]
         folders_sorted = sorted(folders, key=lambda x: x.stat().st_mtime)
 
-        for folder in folders_sorted[:-n]:
-            self.log.info("Deleting old session folder", folder=str(folder))
-            shutil.rmtree(folder)
+        for folder in folders_sorted[:-n]: 
+            try:
+                self.log.info("Deleting old session folder", folder=str(folder))
+                shutil.rmtree(folder)
+            except PermissionError:
+                self.log.warning("Cannot delete folder (in use)", folder=str(folder))
+            except Exception as e:
+                self.log.error("Error deleting folder", folder=str(folder), error=str(e))
+            
+        
 
 if __name__ == "__main__":
     try:
