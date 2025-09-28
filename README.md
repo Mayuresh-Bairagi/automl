@@ -8,6 +8,8 @@ An automated machine learning (AutoML) framework built with Python that simplifi
 - **Data Ingestion**: Automated CSV/Excel file handling with session management
 - **AI-Powered Data Type Analysis**: LLM-based intelligent data type inference and conversion
 - **Automated Feature Engineering**: Complete pipeline for feature extraction and datetime processing
+- **Target Variable Detection**: AI-powered identification of target variables and problem types
+- **Intelligent Feature Selection**: Statistical and LLM-based feature selection for ML models
 - **Exploratory Data Analysis**: Automated HTML report generation with comprehensive data insights
 - **Multi-LLM Support**: Integration with Google Gemini and Groq models
 - **Custom Logging**: Structured logging with JSON output and file/console handlers
@@ -27,6 +29,9 @@ automl/
 │   │   └── data_type_analysis.py   # AI-powered data type analysis
 │   ├── dataCleaning/
 │   │   └── featureEngineering01.py # Automated feature engineering pipeline
+│   ├── problem_statement/
+│   │   ├── target_variable.py      # AI-powered target variable identification
+│   │   └── AutoFeatureSelector.py  # Intelligent feature selection for ML
 │   └── data_dashboard/
 │       └── eda.py                  # Exploratory data analysis and HTML report generation
 ├── model/
@@ -70,7 +75,7 @@ pip install -e .
 
 - **FastAPI & Uvicorn**: Web framework and ASGI server
 - **Pandas & NumPy**: Data manipulation and analysis
-- **Scikit-learn**: Machine learning library
+- **Scikit-learn**: Machine learning library and feature selection methods
 - **XGBoost, LightGBM, CatBoost**: Advanced ML algorithms
 - **PyCaret**: Low-code ML library
 - **Matplotlib, Seaborn, Plotly**: Data visualization
@@ -165,6 +170,38 @@ html_path = eda.generate_report()
 # - Data quality insights
 ```
 
+### Target Variable Detection
+
+```python
+from src.problem_statement.target_variable import TargetVariable
+
+# Initialize target variable detector
+target_handler = TargetVariable(session_id="your_session_id")
+
+# Detect target variable and problem type
+result, df = target_handler.get_target_variable("Predict house prices")
+
+print(f"Target: {result['target_variable']}")
+print(f"Problem Type: {result['problem_type']}")
+print(f"Justification: {result['justification']}")
+```
+
+### Feature Selection
+
+```python
+from src.problem_statement.AutoFeatureSelector import FeatureSelector
+
+# Initialize feature selector
+selector = FeatureSelector(session_id, "Predict house prices")
+
+# Get intelligent feature selection
+response = selector.llm_response()
+
+print(f"Selected Features: {response['selected_features']}")
+print(f"Dropped Features: {response['dropped_features']}")
+print(f"Feature Rankings: {response['ranked_features']}")
+```
+
 ### Custom Logging
 
 ```python
@@ -244,6 +281,21 @@ except Exception as e:
 - **Session Integration**: Works seamlessly with processed data from feature engineering
 - **Export Capability**: Generates standalone HTML files for sharing and presentation
 
+### Target Variable Detection
+
+- **AI-Powered Analysis**: Uses LLM to analyze problem statements and identify target variables
+- **Problem Type Classification**: Automatically determines regression, classification, or clustering
+- **Justification**: Provides clear reasoning for target variable selection
+- **Session Integration**: Works with processed data from feature engineering pipeline
+
+### Intelligent Feature Selection
+
+- **Multi-Method Selection**: Combines correlation, chi-square, mutual information, and variance analysis
+- **Problem-Aware**: Adapts selection strategy based on regression, classification, or clustering
+- **LLM Enhancement**: Uses AI to provide intelligent feature ranking and selection rationale
+- **Statistical Foundation**: Leverages scikit-learn's feature selection methods
+- **Leakage Prevention**: Identifies and removes features that may cause data leakage
+
 ## Configuration
 
 ### Environment Variables
@@ -302,6 +354,12 @@ python src/dataCleaning/featureEngineering01.py
 
 # Test EDA report generation
 python src/data_dashboard/eda.py
+
+# Test target variable detection
+python src/problem_statement/target_variable.py
+
+# Test feature selection
+python src/problem_statement/AutoFeatureSelector.py
 
 # Test model loader
 python utils/model_loader.py
