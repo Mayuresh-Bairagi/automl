@@ -5,6 +5,7 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain.output_parsers import OutputFixingParser 
 from utils.model_loader import ModelLoader
 import os 
+import sys
 from pathlib import Path
 import pandas as pd
 from logger.customlogger import CustomLogger
@@ -41,7 +42,7 @@ class TargetVariable:
                 }
             )
             self.log.info("Target variable prediction completed")
-            return response 
+            return response,self.df
         except Exception as e :
             self.log.error('Error in getting target variable', error=str(e))
             raise AutoML_Exception("Error in getting target variable", e) from e
@@ -53,10 +54,13 @@ if __name__ == "__main__":
     problem_statement = "Predicted the price of plane ticket"  
     try:
         target_var_handler = TargetVariable(session_id=session_id)
-        result = target_var_handler.get_target_variable(problem_statement)
+        result,dataframe = target_var_handler.get_target_variable(problem_statement)
         
         print("Predicted Target Variable:")
         print(result)
+
+        print("frist five row of dataframe:")
+        print(dataframe.head())
 
     except Exception as e:
         print(f"Error occurred: {e}")

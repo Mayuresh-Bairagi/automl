@@ -1,5 +1,5 @@
 from pydantic import BaseModel , RootModel
-from typing import List , Union, Literal
+from typing import List , Union, Literal,Optional
 from enum import Enum
 
 
@@ -26,3 +26,15 @@ class TargetVariableRecommendation(BaseModel):
     target_variable: str
     problem_type: Literal["regression", "classification", "clustering"]
     justification: str
+
+class RankedFeature(BaseModel):
+    name: str
+    score: float
+    reason: Optional[str]
+
+class FeatureSelectionOutput(BaseModel):
+    target_col : str
+    selected_features: List[str]
+    dropped_features: List[str]
+    ranked_features: List[RankedFeature]
+

@@ -1,0 +1,34 @@
+{"session_id": "session_id_20250925_101824_7a7c48d7", "timestamp": "2025-09-28T11:10:09.858522Z", "level": "Initializing TargetVariable handler"}
+{"timestamp": "2025-09-28T11:10:09.911307Z", "level": "Dataset loaded successfully"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-09-28T11:10:09.916299Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-09-28T11:10:09.921294Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-09-28T11:10:09.923296Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-09-28T11:10:09.925297Z", "level": "Loading LLM"}
+{"timestamp": "2025-09-28T11:10:09.955340Z", "level": "TargetVariable handler initialized successfully"}
+{"timestamp": "2025-09-28T11:10:12.378001Z", "level": "Target variable prediction completed"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-09-28T11:10:12.384925Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-09-28T11:10:12.392020Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-09-28T11:10:12.395020Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-09-28T11:10:12.397019Z", "level": "Loading LLM"}
+{"target": "Price", "problem_type": "regression", "timestamp": "2025-09-28T11:10:12.408557Z", "level": "FeatureSelector initialized successfully"}
+{"timestamp": "2025-09-28T11:10:12.411556Z", "level": "Generating LLM response for feature selection"}
+{"problem_type": "regression", "timestamp": "2025-09-28T11:10:12.415569Z", "level": "Selecting features"}
+{"selected_count": 8, "timestamp": "2025-09-28T11:10:12.431557Z", "level": "Regression feature selection complete"}
+{"timestamp": "2025-09-28T11:10:14.717814Z", "level": "LLM response generated successfully"}
+{"session_id": "session_id_20250925_101824_7a7c48d7", "timestamp": "2025-09-28T11:11:26.552333Z", "level": "Initializing TargetVariable handler"}
+{"timestamp": "2025-09-28T11:11:26.579862Z", "level": "Dataset loaded successfully"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-09-28T11:11:26.583862Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-09-28T11:11:26.587861Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-09-28T11:11:26.590867Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-09-28T11:11:26.592859Z", "level": "Loading LLM"}
+{"timestamp": "2025-09-28T11:11:26.598855Z", "level": "TargetVariable handler initialized successfully"}
+{"timestamp": "2025-09-28T11:11:28.158992Z", "level": "Target variable prediction completed"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-09-28T11:11:28.162990Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-09-28T11:11:28.168920Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-09-28T11:11:28.171915Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-09-28T11:11:28.175387Z", "level": "Loading LLM"}
+{"target": "Price", "problem_type": "regression", "timestamp": "2025-09-28T11:11:28.184927Z", "level": "FeatureSelector initialized successfully"}
+{"timestamp": "2025-09-28T11:11:28.187925Z", "level": "Generating LLM response for feature selection"}
+{"problem_type": "regression", "timestamp": "2025-09-28T11:11:28.190454Z", "level": "Selecting features"}
+{"selected_count": 8, "timestamp": "2025-09-28T11:11:28.201263Z", "level": "Regression feature selection complete"}
+{"timestamp": "2025-09-28T11:11:31.660031Z", "level": "LLM response generated successfully"}

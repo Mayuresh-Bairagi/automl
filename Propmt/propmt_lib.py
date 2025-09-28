@@ -86,9 +86,32 @@ Additional Rules:
    - Do not include any text outside the schema.
 """)
 
+feature_selection_prompt = ChatPromptTemplate.from_template("""
+You are an AI assistant specialized in feature selection for machine learning.
+
+You are given dataset metadata in JSON format.  
+Your task is to select the most useful features, drop irrelevant/leaky ones, and rank all features.
+
+You MUST return your output in the exact JSON structure defined below:
+{return_instructions}
+
+----------------
+Dataset Metadata (JSON):
+{metadata_json}
+----------------
+
+Instructions:
+1. Read the problem statement & target variable carefully.  
+2. Select features that are informative and non-leaky.  
+3. Drop features that are IDs, highly missing, constant, or leak target info.  
+4. Rank all features with scores (0–1) and give a short reason for each.  
+5. Ensure `selected_features` + `dropped_features` partition all features.  
+6. Output **only valid JSON** matching FeatureSelectionOutput.
+""")
 
 PROMPT_REGISTRY = {
     'change_data_type': change_data_type,
     'feature_engineering' : feature_engineering_prompt,
-    'target_variable' : target_variable_prompt
+    'target_variable' : target_variable_prompt,
+    'feature_selection' : feature_selection_prompt
 }

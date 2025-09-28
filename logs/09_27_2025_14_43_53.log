@@ -1,0 +1,46 @@
+Pandas backend loaded 2.1.4
+Numpy backend loaded 1.26.4
+Pyspark backend NOT loaded
+Python backend loaded
+{"timestamp": "2025-09-27T09:14:30.057048Z", "level": "Initializing FeatureEngineer1..."}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-09-27T09:14:30.062632Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-09-27T09:14:30.124930Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-09-27T09:14:30.126070Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-09-27T09:14:30.126070Z", "level": "Loading LLM"}
+{"timestamp": "2025-09-27T09:14:30.244977Z", "level": "LLM model loaded successfully"}
+{"dataset_shape": [1338, 7], "timestamp": "2025-09-27T09:14:30.248364Z", "level": "Dataset provided as DataFrame"}
+{"session_id": "session_id_20250927_091430_67840678", "session_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250927_091430_67840678", "timestamp": "2025-09-27T09:14:30.251906Z", "level": "Dataset Handler initialized"}
+{"filename": "raw_file.csv", "save_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250927_091430_67840678\\raw_file.csv", "rows": 1338, "cols": 7, "session_id": "session_id_20250927_091430_67840678", "timestamp": "2025-09-27T09:14:30.304697Z", "level": "CSV saved successfully"}
+{"session_id": "session_id_20250927_091430_67840678", "timestamp": "2025-09-27T09:14:30.305698Z", "level": "datasetHandler initialized and raw data saved"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-09-27T09:14:30.309970Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-09-27T09:14:30.315506Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-09-27T09:14:30.315506Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-09-27T09:14:30.317563Z", "level": "Loading LLM"}
+{"timestamp": "2025-09-27T09:14:30.337691Z", "level": "Data type analysis initialized successfully"}
+{"timestamp": "2025-09-27T09:14:30.352230Z", "level": "Meta-data analysis chain initialized"}
+{"keys": [{"column_name": "age", "current_dtype": "int64", "sample_values": ["22", "31", "34", "39", "42"], "suggested_dtype": "integer", "reason": "The column contains whole numbers, so integer is appropriate."}, {"column_name": "sex", "current_dtype": "object", "sample_values": ["male", "male", "female", "male", "female"], "suggested_dtype": "object", "reason": "The column contains categorical string values, so object is appropriate."}, {"column_name": "bmi", "current_dtype": "float64", "sample_values": ["28.785", "33.3", "35.2", "39.05", "30.9"], "suggested_dtype": "float", "reason": "The column contains decimal numbers, so float is appropriate."}, {"column_name": "children", "current_dtype": "int64", "sample_values": ["5", "2", "1", "0", "2"], "suggested_dtype": "integer", "reason": "The column contains whole numbers, so integer is appropriate."}, {"column_name": "smoker", "current_dtype": "object", "sample_values": ["no", "no", "no", "no", "no"], "suggested_dtype": "object", "reason": "The column contains categorical string values, so object is appropriate."}, {"column_name": "region", "current_dtype": "object", "sample_values": ["northwest", "northeast", "northeast", "southwest", "northwest"], "suggested_dtype": "object", "reason": "The column contains categorical string values, so object is appropriate."}, {"column_name": "charges", "current_dtype": "float64", "sample_values": ["8283.6807", "13143.86485", "11090.7178", "8233.0975", "2304.0022"], "suggested_dtype": "float", "reason": "The column contains decimal numbers, so float is appropriate."}], "timestamp": "2025-09-27T09:14:37.002233Z", "level": "Metadata extraction successful"}
+{"recommendations_count": 7, "timestamp": "2025-09-27T09:14:37.003233Z", "level": "Data type analysis completed"}
+{"dataframe_overview": {"age": {"0": 19, "1": 18, "2": 28, "3": 33, "4": 32}, "sex": {"0": "female", "1": "male", "2": "male", "3": "male", "4": "male"}, "bmi": {"0": 27.9, "1": 33.77, "2": 33.0, "3": 22.705, "4": 28.88}, "children": {"0": 0, "1": 1, "2": 3, "3": 0, "4": 0}, "smoker": {"0": "yes", "1": "no", "2": "no", "3": "no", "4": "no"}, "region": {"0": "southwest", "1": "southeast", "2": "southeast", "3": "northwest", "4": "northwest"}, "charges": {"0": 16884.924, "1": 1725.5523, "2": 4449.462, "3": 21984.47061, "4": 3866.8552}}, "timestamp": "2025-09-27T09:14:37.013010Z", "level": "Applied conversions successfully"}
+{"timestamp": "2025-09-27T09:14:37.014001Z", "level": "FeatureEngineer1 initialized successfully"}
+{"timestamp": "2025-09-27T09:14:37.014001Z", "level": "Starting feature generation..."}
+{"column": "age", "suggested_dtype": "integer", "timestamp": "2025-09-27T09:14:37.014001Z", "level": "Processing column"}
+{"column": "age", "timestamp": "2025-09-27T09:14:37.016599Z", "level": "Skipping column (no special handling)"}
+{"column": "sex", "suggested_dtype": "object", "timestamp": "2025-09-27T09:14:37.016599Z", "level": "Processing column"}
+{"response": {"column_name": "sex", "current_dtype": "object", "sample_values": ["female", "male", "male", "male", "male"], "suggested_dtype": "boolean", "reason": "The column 'sex' contains categorical data with only two unique values ('female' and 'male'). It can be efficiently represented as a boolean column where, for example, 'female' is mapped to True and 'male' to False.", "remake": "yes", "code": "import pandas as pd\n\n# Define a mapping for the 'sex' values to boolean (True/False)\nsex_mapping = {'female': True, 'male': False}\n\n# Use the .map() function to create a new column with boolean values\nconverted_df['sex'] = converted_df['sex'].map(sex_mapping)\n\n# Handle cases where the mapping fails (e.g., unexpected values) by setting them to NaN\nconverted_df['sex'] = converted_df['sex'].fillna(False).astype(bool)"}, "timestamp": "2025-09-27T09:14:40.026286Z", "level": "LLM response received"}
+{"column": "sex", "timestamp": "2025-09-27T09:14:40.027294Z", "level": "Remaking column using generated code"}
+{"column": "bmi", "suggested_dtype": "float", "timestamp": "2025-09-27T09:14:40.034787Z", "level": "Processing column"}
+{"column": "bmi", "timestamp": "2025-09-27T09:14:40.034787Z", "level": "Skipping column (no special handling)"}
+{"column": "children", "suggested_dtype": "integer", "timestamp": "2025-09-27T09:14:40.035785Z", "level": "Processing column"}
+{"column": "children", "timestamp": "2025-09-27T09:14:40.039855Z", "level": "Skipping column (no special handling)"}
+{"column": "smoker", "suggested_dtype": "object", "timestamp": "2025-09-27T09:14:40.043460Z", "level": "Processing column"}
+{"response": {"column_name": "smoker", "current_dtype": "object", "sample_values": ["yes", "no", "no", "no", "no"], "suggested_dtype": "boolean", "reason": "The column 'smoker' contains binary categorical data ('yes', 'no') which can be efficiently represented as boolean values.", "code": "import pandas as pd\n\nconverted_df['smoker'] = converted_df['smoker'].map({'yes': True, 'no': False})\n", "remake": "yes"}, "timestamp": "2025-09-27T09:14:42.616517Z", "level": "LLM response received"}
+{"column": "smoker", "timestamp": "2025-09-27T09:14:42.618441Z", "level": "Remaking column using generated code"}
+{"column": "region", "suggested_dtype": "object", "timestamp": "2025-09-27T09:14:42.623131Z", "level": "Processing column"}
+{"response": {"column_name": "region", "current_dtype": "object", "sample_values": ["southwest", "southeast", "southeast", "northwest", "northwest"], "suggested_dtype": "object", "reason": "The column 'region' contains categorical data represented as strings. No feature engineering is needed as the data is already in a usable format."}, "timestamp": "2025-09-27T09:14:43.802966Z", "level": "LLM response received"}
+{"column": "region", "timestamp": "2025-09-27T09:14:43.803912Z", "level": "No remake needed for column"}
+{"column": "charges", "suggested_dtype": "float", "timestamp": "2025-09-27T09:14:43.804911Z", "level": "Processing column"}
+{"column": "charges", "timestamp": "2025-09-27T09:14:43.805910Z", "level": "Skipping column (no special handling)"}
+{"session_id": "session_id_20250927_091430_67840678", "session_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250927_091430_67840678", "timestamp": "2025-09-27T09:14:43.808915Z", "level": "Dataset Handler initialized"}
+{"filename": "processed_file.csv", "save_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250927_091430_67840678\\processed_file.csv", "rows": 1337, "cols": 5, "session_id": "session_id_20250927_091430_67840678", "timestamp": "2025-09-27T09:14:43.830043Z", "level": "CSV saved successfully"}
+{"path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20250927_091430_67840678", "timestamp": "2025-09-27T09:14:43.830043Z", "level": "Processed data saved successfully"}
+{"timestamp": "2025-09-27T09:14:43.830043Z", "level": "Feature generation completed successfully"}
