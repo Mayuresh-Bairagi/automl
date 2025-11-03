@@ -10,6 +10,7 @@ An automated machine learning (AutoML) framework built with Python that simplifi
 - **Automated Feature Engineering**: Complete pipeline for feature extraction and datetime processing
 - **Target Variable Detection**: AI-powered identification of target variables and problem types
 - **Intelligent Feature Selection**: Statistical and LLM-based feature selection for ML models
+- **Automated ML Classification**: Complete classification pipeline with multiple algorithms and hyperparameter tuning
 - **Exploratory Data Analysis**: Automated HTML report generation with comprehensive data insights
 - **Multi-LLM Support**: Integration with Google Gemini and Groq models
 - **Custom Logging**: Structured logging with JSON output and file/console handlers
@@ -32,6 +33,8 @@ automl/
 │   ├── problem_statement/
 │   │   ├── target_variable.py      # AI-powered target variable identification
 │   │   └── AutoFeatureSelector.py  # Intelligent feature selection for ML
+│   ├── Classifier/
+│   │   └── MLClassifier.py         # Automated ML classification with multiple algorithms
 │   └── data_dashboard/
 │       └── eda.py                  # Exploratory data analysis and HTML report generation
 ├── model/
@@ -202,6 +205,34 @@ print(f"Dropped Features: {response['dropped_features']}")
 print(f"Feature Rankings: {response['ranked_features']}")
 ```
 
+### Automated ML Classification
+
+```python
+from src.Classifier.MLClassifier import AutoMLClassifier
+
+# Initialize classifier with session and problem statement
+classifier = AutoMLClassifier(
+    session_id="your_session_id",
+    problem_statement="Predict weather conditions",
+    result=target_result,
+    df=dataframe
+)
+
+# Train multiple models with hyperparameter tuning
+results_df, trained_models, model_paths = classifier.train_models()
+
+# View model performance comparison
+print(results_df)
+# Output:
+#           Model  Accuracy  F1_Score              Best_Params
+# 0  RandomForest     0.95      0.94  {'n_estimators': 100}
+# 1  LogisticRegression 0.92    0.91  {'C': 1}
+
+# Models automatically saved as .joblib files
+print(f"Best model: {results_df.iloc[0]['Model']}")
+print(f"Saved at: {model_paths[results_df.iloc[0]['Model']]}")
+```
+
 ### Custom Logging
 
 ```python
@@ -296,6 +327,16 @@ except Exception as e:
 - **Statistical Foundation**: Leverages scikit-learn's feature selection methods
 - **Leakage Prevention**: Identifies and removes features that may cause data leakage
 
+### Automated ML Classification
+
+- **Multiple Algorithms**: Supports Logistic Regression, Random Forest, Gradient Boosting, SVM, KNN, and Decision Trees
+- **Hyperparameter Tuning**: Automated GridSearchCV for optimal model parameters
+- **Data Preprocessing**: Automatic label encoding for categorical variables and MinMax scaling for numerical features
+- **Model Persistence**: Saves trained models and preprocessing objects as .joblib files
+- **Performance Metrics**: Comprehensive evaluation with accuracy, F1-score, and classification reports
+- **Session Integration**: Works seamlessly with feature selection and target variable detection
+- **Flexible Training**: Option to skip computationally heavy models for faster prototyping
+
 ## Configuration
 
 ### Environment Variables
@@ -360,6 +401,9 @@ python src/problem_statement/target_variable.py
 
 # Test feature selection
 python src/problem_statement/AutoFeatureSelector.py
+
+# Test automated classification
+python src/Classifier/MLClassifier.py
 
 # Test model loader
 python utils/model_loader.py

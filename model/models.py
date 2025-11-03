@@ -38,3 +38,8 @@ class FeatureSelectionOutput(BaseModel):
     dropped_features: List[str]
     ranked_features: List[RankedFeature]
 
+
+class request_ml_models(BaseModel):
+    session_id : str
+    problem_statement : str
+

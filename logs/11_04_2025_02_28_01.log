@@ -1,0 +1,54 @@
+Pandas backend loaded 2.1.4
+Numpy backend loaded 1.26.4
+Pyspark backend NOT loaded
+Python backend loaded
+{"timestamp": "2025-11-03T20:58:17.377850Z", "level": "Dataset loaded successfully"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-11-03T20:58:17.392925Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-11-03T20:58:17.408922Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-11-03T20:58:17.411935Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-11-03T20:58:17.417934Z", "level": "Loading LLM"}
+{"timestamp": "2025-11-03T20:58:17.547629Z", "level": "TargetVariable handler initialized successfully"}
+{"timestamp": "2025-11-03T20:58:18.825335Z", "level": "Target variable prediction completed"}
+{"session_id": "session_id_20251103_205227_89237208", "timestamp": "2025-11-03T20:58:18.825917Z", "level": "Initializing AutoMLClassifier"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-11-03T20:58:18.874964Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-11-03T20:58:18.876966Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-11-03T20:58:18.876966Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-11-03T20:58:18.876966Z", "level": "Loading LLM"}
+{"extra": {"target": "RainToday", "problem_type": "classification"}, "timestamp": "2025-11-03T20:58:18.880087Z", "level": "FeatureSelector initialized successfully"}
+{"timestamp": "2025-11-03T20:58:18.881180Z", "level": "Generating LLM response for feature selection"}
+{"extra": {"problem_type": "classification"}, "timestamp": "2025-11-03T20:58:18.881180Z", "level": "Selecting features"}
+{"extra": {"selected_count": 26}, "timestamp": "2025-11-03T20:58:21.422982Z", "level": "Classification feature selection complete"}
+{"timestamp": "2025-11-03T20:58:30.411225Z", "level": "LLM response generated successfully"}
+{"timestamp": "2025-11-03T20:58:30.413296Z", "level": "AutoMLClassifier initialized successfully"}
+{"timestamp": "2025-11-03T20:58:30.413296Z", "level": "Starting preprocessing inside train_models()"}
+{"timestamp": "2025-11-03T20:58:30.413296Z", "level": "Starting preprocessing"}
+{"exc_info": true, "timestamp": "2025-11-03T20:58:30.418301Z", "level": "Preprocessing failed: \"['RainTomorrow'] not found in axis\""}
+{"timestamp": "2025-11-03T20:58:46.242293Z", "level": "Dataset loaded successfully"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-11-03T20:58:46.244291Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-11-03T20:58:46.247288Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-11-03T20:58:46.247793Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-11-03T20:58:46.247793Z", "level": "Loading LLM"}
+{"timestamp": "2025-11-03T20:58:46.256349Z", "level": "TargetVariable handler initialized successfully"}
+{"timestamp": "2025-11-03T20:58:47.621211Z", "level": "Target variable prediction completed"}
+{"session_id": "session_id_20251103_205227_89237208", "timestamp": "2025-11-03T20:58:47.623149Z", "level": "Initializing AutoMLClassifier"}
+{"available_keys": ["GROQ_API_KEY", "GOOGLE_API_KEY"], "timestamp": "2025-11-03T20:58:47.715133Z", "level": "Environment variables validated successfully"}
+{"config_keys": ["llm"], "timestamp": "2025-11-03T20:58:47.717132Z", "level": "Configurations loaded successfully"}
+{"timestamp": "2025-11-03T20:58:47.718493Z", "level": "Loading LLM"}
+{"provider": "google", "model": "gemini-2.0-flash", "temperature": 0.0, "max_tokens": 2048, "timestamp": "2025-11-03T20:58:47.718493Z", "level": "Loading LLM"}
+{"extra": {"target": "RainToday", "problem_type": "classification"}, "timestamp": "2025-11-03T20:58:47.726539Z", "level": "FeatureSelector initialized successfully"}
+{"timestamp": "2025-11-03T20:58:47.727540Z", "level": "Generating LLM response for feature selection"}
+{"extra": {"problem_type": "classification"}, "timestamp": "2025-11-03T20:58:47.728539Z", "level": "Selecting features"}
+{"extra": {"selected_count": 26}, "timestamp": "2025-11-03T20:58:49.968612Z", "level": "Classification feature selection complete"}
+{"timestamp": "2025-11-03T20:58:57.287416Z", "level": "LLM response generated successfully"}
+{"timestamp": "2025-11-03T20:58:57.288453Z", "level": "AutoMLClassifier initialized successfully"}
+{"timestamp": "2025-11-03T20:58:57.289191Z", "level": "Starting preprocessing inside train_models()"}
+{"timestamp": "2025-11-03T20:58:57.289419Z", "level": "Starting preprocessing"}
+{"numeric_features": ["MinTemp", "MaxTemp", "Rainfall", "Evaporation", "Sunshine", "WindGustSpeed", "WindSpeed9am", "WindSpeed3pm", "Humidity9am", "Humidity3pm", "Pressure9am", "Pressure3pm", "Cloud9am", "Cloud3pm", "Temp9am", "Temp3pm", "Date_day", "Date_month", "Date_weekday"], "categorical_features": ["Location", "WindGustDir", "WindDir9am", "WindDir3pm", "RainToday", "RainTomorrow"], "timestamp": "2025-11-03T20:58:57.326184Z", "level": "Preprocessing completed"}
+{"test_size": 0.2, "timestamp": "2025-11-03T20:58:57.327185Z", "level": "Splitting dataset"}
+{"timestamp": "2025-11-03T20:58:57.334255Z", "level": "Training LogisticRegression"}
+{"Accuracy": 0.853066726578297, "F1_Score": 0.8432501031919623, "model_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20251103_205227_89237208\\LogisticRegression.joblib", "timestamp": "2025-11-03T20:59:01.520373Z", "level": "LogisticRegression trained"}
+{"timestamp": "2025-11-03T20:59:01.520373Z", "level": "Training DecisionTree"}
+{"Accuracy": 0.8395866097506178, "F1_Score": 0.8280187562225602, "model_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20251103_205227_89237208\\DecisionTree.joblib", "timestamp": "2025-11-03T20:59:02.937150Z", "level": "DecisionTree trained"}
+{"timestamp": "2025-11-03T20:59:02.937150Z", "level": "Training KNeighbors"}
+{"Accuracy": 0.8018422826331162, "F1_Score": 0.773288767087905, "model_path": "D:\\College\\Project\\automl\\data\\datasetAnalysis\\session_id_20251103_205227_89237208\\KNeighbors.joblib", "timestamp": "2025-11-03T20:59:04.316004Z", "level": "KNeighbors trained"}
+{"trained_models": ["LogisticRegression", "DecisionTree", "KNeighbors"], "timestamp": "2025-11-03T20:59:04.318000Z", "level": "All models training completed"}
