@@ -1,7 +1,6 @@
 # AutoML Project
 
 An automated machine learning (AutoML) framework built with Python that simplifies the process of data ingestion, analysis, and model building.
-
 ## System Architecture
 
 ```mermaid
@@ -92,510 +91,136 @@ flowchart TD
 
 ## UML Diagrams
 
-### Class Diagram
+### Simple Class Diagram
 
 ```mermaid
 classDiagram
-    class FastAPIApp {
-        +app: FastAPI
-        +upload_file(file: UploadFile)
-        +get_status(session_id: str)
-        +start_server()
+    class WebApp {
+        +upload_file()
+        +get_status()
     }
     
-    class DatasetHandler {
-        -data_storage_path: str
-        -logger: Logger
-        +save_dataset(file: UploadFile) DataFrame
-        +create_session_directory() str
-        +validate_file(file: UploadFile) bool
-        +read_csv(file_path: str) DataFrame
-        +read_excel(file_path: str) DataFrame
+    class DataHandler {
+        +save_dataset()
+        +read_file()
     }
     
-    class DataTypeAnalyzer {
-        -dataset_path: str
-        -llm_model: LLMModel
-        -logger: Logger
-        +analyze_data_type() DataTypeRecommendation
-        +generate_conversion_code(recommendations: dict) str
-        +apply_conversions(df: DataFrame, recommendations: dict) DataFrame
-        -get_sample_data(df: DataFrame) DataFrame
-        -validate_recommendations(recommendations: dict) bool
+    class DataAnalyzer {
+        +analyze_types()
+        +convert_data()
     }
     
-    class FeatureEngineer1 {
-        -dataset_path: str
-        -dataframe: DataFrame
-        -session_id: str
-        -llm_model: LLMModel
-        +generate_features() tuple[DataFrame, str]
-        +process_datetime_columns(df: DataFrame) DataFrame
-        +process_object_columns(df: DataFrame) DataFrame
-        +extract_weight_values(df: DataFrame) DataFrame
-        +extract_duration_values(df: DataFrame) DataFrame
-        -create_session_id() str
-        -save_processed_data(df: DataFrame) str
+    class FeatureEngine {
+        +create_features()
+        +process_dates()
     }
     
-    class TargetVariable {
-        -session_id: str
-        -llm_model: LLMModel
-        -logger: Logger
-        +get_target_variable(problem_statement: str) tuple[dict, DataFrame]
-        +classify_problem_type(target_col: str, df: DataFrame) str
-        -analyze_column_characteristics(df: DataFrame) dict
-        -validate_target_selection(target: str, df: DataFrame) bool
+    class TargetFinder {
+        +find_target()
+        +classify_problem()
     }
     
     class FeatureSelector {
-        -session_id: str
-        -problem_statement: str
-        -llm_model: LLMModel
-        +llm_response() dict
-        +statistical_feature_selection(df: DataFrame, target: str) list
-        +correlation_analysis(df: DataFrame) dict
-        +mutual_info_selection(X: DataFrame, y: Series) list
-        +chi2_selection(X: DataFrame, y: Series) list
-        -combine_selection_methods(results: list) list
+        +select_features()
+        +rank_importance()
     }
     
-    class AutoMLClassifier {
-        -session_id: str
-        -problem_statement: str
-        -target_result: dict
-        -dataframe: DataFrame
-        -models: dict
-        +train_models() tuple[DataFrame, dict, dict]
-        +preprocess_data(df: DataFrame) tuple[DataFrame, dict]
-        +train_single_model(model_name: str, X: DataFrame, y: Series) dict
-        +evaluate_model(model: object, X_test: DataFrame, y_test: Series) dict
-        +save_model(model: object, model_name: str) str
-        -setup_models() dict
-        -hyperparameter_tuning(model: object, X: DataFrame, y: Series) object
+    class MLTrainer {
+        +train_models()
+        +evaluate_performance()
     }
     
-    class EDA {
-        -session_id: str
-        -logger: Logger
-        +generate_report() str
-        +create_profile_report(df: DataFrame) ProfileReport
-        +save_html_report(report: ProfileReport) str
-        -load_processed_data() DataFrame
-        -validate_data_quality(df: DataFrame) dict
+    class ReportGenerator {
+        +create_eda_report()
+        +save_html()
     }
     
-    class LLMModel {
-        <<interface>>
-        +generate_response(prompt: str) str
-        +validate_response(response: str) bool
+    class LLMService {
+        +generate_response()
     }
     
-    class GoogleGeminiModel {
-        -api_key: str
-        -model_name: str
-        -temperature: float
-        +generate_response(prompt: str) str
-        +configure_model(config: dict) void
-    }
+    %% Main Flow
+    WebApp --> DataHandler
+    DataHandler --> DataAnalyzer
+    DataAnalyzer --> FeatureEngine
+    FeatureEngine --> TargetFinder
+    TargetFinder --> FeatureSelector
+    FeatureSelector --> MLTrainer
+    FeatureEngine --> ReportGenerator
     
-    class GroqModel {
-        -api_key: str
-        -model_name: str
-        -temperature: float
-        +generate_response(prompt: str) str
-        +configure_model(config: dict) void
-    }
-    
-    class CustomLogger {
-        -log_directory: str
-        -log_level: str
-        +get_logger(module_name: str) Logger
-        +configure_handlers() list
-        +format_log_message(message: str, **kwargs) str
-    }
-    
-    class AutoML_Exception {
-        -error_message: str
-        -original_exception: Exception
-        -filename: str
-        -line_number: int
-        +__init__(message: str, exception: Exception)
-        +get_error_details() dict
-    }
-    
-    class ConfigLoader {
-        +load_config(config_path: str) dict
-        +get_llm_config(provider: str) dict
-        +validate_config(config: dict) bool
-    }
-    
-    class SessionManager {
-        -base_path: str
-        +create_session() str
-        +get_session_path(session_id: str) str
-        +cleanup_old_sessions() void
-        +validate_session(session_id: str) bool
-    }
-    
-    %% Relationships
-    FastAPIApp --> DatasetHandler : uses
-    DatasetHandler --> DataTypeAnalyzer : creates
-    DataTypeAnalyzer --> FeatureEngineer1 : triggers
-    FeatureEngineer1 --> TargetVariable : flows to
-    TargetVariable --> FeatureSelector : flows to
-    FeatureSelector --> AutoMLClassifier : flows to
-    AutoMLClassifier --> EDA : parallel with
-    
-    DataTypeAnalyzer --> LLMModel : uses
-    FeatureEngineer1 --> LLMModel : uses
-    TargetVariable --> LLMModel : uses
-    FeatureSelector --> LLMModel : uses
-    
-    LLMModel <|-- GoogleGeminiModel : implements
-    LLMModel <|-- GroqModel : implements
-    
-    DatasetHandler --> CustomLogger : uses
-    DataTypeAnalyzer --> CustomLogger : uses
-    FeatureEngineer1 --> CustomLogger : uses
-    TargetVariable --> CustomLogger : uses
-    FeatureSelector --> CustomLogger : uses
-    AutoMLClassifier --> CustomLogger : uses
-    EDA --> CustomLogger : uses
-    
-    DatasetHandler --> AutoML_Exception : throws
-    DataTypeAnalyzer --> AutoML_Exception : throws
-    FeatureEngineer1 --> AutoML_Exception : throws
-    TargetVariable --> AutoML_Exception : throws
-    FeatureSelector --> AutoML_Exception : throws
-    AutoMLClassifier --> AutoML_Exception : throws
-    
-    FastAPIApp --> ConfigLoader : uses
-    DataTypeAnalyzer --> ConfigLoader : uses
-    FeatureEngineer1 --> ConfigLoader : uses
-    
-    DatasetHandler --> SessionManager : uses
-    FeatureEngineer1 --> SessionManager : uses
-    TargetVariable --> SessionManager : uses
-    FeatureSelector --> SessionManager : uses
-    AutoMLClassifier --> SessionManager : uses
-    EDA --> SessionManager : uses
+    %% AI Integration
+    DataAnalyzer --> LLMService
+    FeatureEngine --> LLMService
+    TargetFinder --> LLMService
+    FeatureSelector --> LLMService
 ```
 
-### Activity Diagram
+### Simple Process Flow
 
 ```mermaid
 flowchart TD
-    Start([User Uploads File]) --> A1{File Valid?}
-    A1 -->|No| A2[Return Error]
-    A1 -->|Yes| A3[Create Session]
-    A3 --> A4[Save Raw Data]
-    A4 --> A5[Initialize Data Type Analyzer]
+    A[Upload File] --> B[Validate File]
+    B --> C[Create Session]
+    C --> D[Analyze Data Types]
+    D --> E[AI Type Conversion]
+    E --> F[Feature Engineering]
+    F --> G[Find Target Variable]
+    G --> H[Select Best Features]
+    H --> I[Train ML Models]
+    I --> J[Evaluate Models]
+    J --> K[Generate Report]
+    K --> L[Save Results]
     
-    A5 --> B1[Extract Sample Data]
-    B1 --> B2[Send to LLM for Analysis]
-    B2 --> B3[Receive Type Recommendations]
-    B3 --> B4[Generate Conversion Code]
-    B4 --> B5[Apply Data Type Conversions]
-    B5 --> B6[Validate Conversions]
-    B6 --> B7{Conversion Success?}
-    B7 -->|No| B8[Log Error & Use Original]
-    B7 -->|Yes| B9[Save Converted Data]
-    B8 --> C1
-    B9 --> C1
-    
-    C1[Initialize Feature Engineer] --> C2{DateTime Columns?}
-    C2 -->|Yes| C3[Extract Date Features]
-    C2 -->|No| C4
-    C3 --> C4{Object Columns?}
-    C4 -->|Yes| C5[Send to LLM for Feature Extraction]
-    C4 -->|No| C6
-    C5 --> C6[Extract Weight/Duration Values]
-    C6 --> C7[Combine All Features]
-    C7 --> C8[Save Processed Data]
-    
-    C8 --> D1[Initialize Target Variable Detector]
-    D1 --> D2[Analyze Problem Statement]
-    D2 --> D3[Send to LLM for Target Analysis]
-    D3 --> D4[Receive Target Recommendations]
-    D4 --> D5[Validate Target Variable]
-    D5 --> D6{Target Valid?}
-    D6 -->|No| D7[Request User Input]
-    D6 -->|Yes| D8[Classify Problem Type]
-    D7 --> D8
-    D8 --> D9[Save Target Information]
-    
-    D9 --> E1[Initialize Feature Selector]
-    E1 --> E2[Statistical Feature Analysis]
-    E2 --> E3[Correlation Analysis]
-    E3 --> E4[Mutual Information Analysis]
-    E4 --> E5[Chi-Square Analysis]
-    E5 --> E6[Send Results to LLM]
-    E6 --> E7[Receive Feature Rankings]
-    E7 --> E8[Combine Selection Methods]
-    E8 --> E9[Finalize Feature List]
-    E9 --> E10[Save Feature Selection]
-    
-    E10 --> F1[Initialize ML Classifier]
-    F1 --> F2[Preprocess Data]
-    F2 --> F3[Label Encoding]
-    F3 --> F4[MinMax Scaling]
-    F4 --> F5[Split Train/Test Data]
-    F5 --> F6[Initialize Models]
-    
-    F6 --> G1[Train Logistic Regression]
-    F6 --> G2[Train Random Forest]
-    F6 --> G3[Train Gradient Boosting]
-    F6 --> G4[Train SVM]
-    F6 --> G5[Train KNN]
-    F6 --> G6[Train Decision Tree]
-    
-    G1 --> H1[Hyperparameter Tuning]
-    G2 --> H2[Hyperparameter Tuning]
-    G3 --> H3[Hyperparameter Tuning]
-    G4 --> H4[Hyperparameter Tuning]
-    G5 --> H5[Hyperparameter Tuning]
-    G6 --> H6[Hyperparameter Tuning]
-    
-    H1 --> I1[Model Evaluation]
-    H2 --> I2[Model Evaluation]
-    H3 --> I3[Model Evaluation]
-    H4 --> I4[Model Evaluation]
-    H5 --> I5[Model Evaluation]
-    H6 --> I6[Model Evaluation]
-    
-    I1 --> J1[Save Model]
-    I2 --> J2[Save Model]
-    I3 --> J3[Save Model]
-    I4 --> J4[Save Model]
-    I5 --> J5[Save Model]
-    I6 --> J6[Save Model]
-    
-    J1 --> K1[Compile Results]
-    J2 --> K1
-    J3 --> K1
-    J4 --> K1
-    J5 --> K1
-    J6 --> K1
-    
-    K1 --> L1[Rank Models by Performance]
-    L1 --> L2[Generate EDA Report]
-    L2 --> L3[Save Final Results]
-    L3 --> End([Pipeline Complete])
-    
-    %% Parallel EDA Process
-    C8 --> M1[Initialize EDA Generator]
-    M1 --> M2[Load Processed Data]
-    M2 --> M3[Generate Profile Report]
-    M3 --> M4[Create Visualizations]
-    M4 --> M5[Save HTML Report]
-    M5 --> L2
-    
-    %% Error Handling
-    A2 --> End
-    
-    style Start fill:#e1f5fe
-    style End fill:#c8e6c9
-    style A2 fill:#ffebee
-    style B8 fill:#fff3e0
-    style D7 fill:#fff3e0
+    style A fill:#e1f5fe
+    style L fill:#c8e6c9
+    style E fill:#fff3e0
+    style G fill:#fff3e0
 ```
 
-### Entity Relationship Diagram (ERD)
+### Simple Data Model
 
 ```mermaid
 erDiagram
     SESSION {
-        string session_id PK
-        datetime created_at
-        datetime updated_at
-        string status
-        string user_id
-        string original_filename
-        int file_size
-        string file_type
+        string id
+        string filename
+        datetime created
     }
     
-    RAW_DATASET {
-        string dataset_id PK
-        string session_id FK
+    DATASET {
+        string id
+        string session_id
         string file_path
-        int row_count
-        int column_count
-        json column_info
-        datetime ingested_at
-        string encoding
-        boolean is_valid
+        int rows
+        int columns
     }
     
-    DATA_TYPE_ANALYSIS {
-        string analysis_id PK
-        string session_id FK
-        json original_types
-        json recommended_types
-        json conversion_code
-        json llm_response
-        datetime analyzed_at
-        string llm_provider
-        boolean applied_successfully
+    FEATURES {
+        string id
+        string session_id
+        json feature_list
+        json transformations
     }
     
-    PROCESSED_DATASET {
-        string processed_id PK
-        string session_id FK
-        string file_path
-        int row_count
-        int column_count
-        json feature_info
-        json transformations_applied
-        datetime processed_at
-        string processing_stage
-    }
-    
-    FEATURE_ENGINEERING {
-        string feature_eng_id PK
-        string session_id FK
-        json datetime_features
-        json object_features
-        json weight_features
-        json duration_features
-        json llm_generated_code
-        datetime engineered_at
-        int features_created
-        json feature_descriptions
-    }
-    
-    TARGET_VARIABLE {
-        string target_id PK
-        string session_id FK
-        string problem_statement
-        string target_column
-        string problem_type
-        json justification
-        json llm_analysis
-        datetime detected_at
-        float confidence_score
-        boolean user_confirmed
-    }
-    
-    FEATURE_SELECTION {
-        string selection_id PK
-        string session_id FK
-        json selected_features
-        json dropped_features
-        json feature_rankings
-        json statistical_scores
-        json llm_reasoning
-        datetime selected_at
-        string selection_method
-        int final_feature_count
-    }
-    
-    ML_MODEL {
-        string model_id PK
-        string session_id FK
+    MODELS {
+        string id
+        string session_id
         string model_name
-        string model_type
-        json hyperparameters
         float accuracy
-        float f1_score
-        json classification_report
-        string model_file_path
-        datetime trained_at
-        json preprocessing_info
-        boolean is_best_model
+        string file_path
     }
     
-    MODEL_EVALUATION {
-        string evaluation_id PK
-        string model_id FK
-        json confusion_matrix
-        json performance_metrics
-        json cross_validation_scores
-        json feature_importance
-        datetime evaluated_at
-        string evaluation_method
+    REPORTS {
+        string id
+        string session_id
+        string report_path
+        datetime generated
     }
     
-    EDA_REPORT {
-        string report_id PK
-        string session_id FK
-        string report_file_path
-        json report_metadata
-        json data_quality_summary
-        json statistical_summary
-        datetime generated_at
-        int report_size_mb
-    }
-    
-    PREPROCESSING_OBJECTS {
-        string preprocess_id PK
-        string session_id FK
-        string object_type
-        string object_file_path
-        json object_metadata
-        datetime created_at
-        string associated_model
-    }
-    
-    ERROR_LOG {
-        string error_id PK
-        string session_id FK
-        string error_type
-        string error_message
-        json error_details
-        string stack_trace
-        datetime occurred_at
-        string module_name
-        string severity_level
-    }
-    
-    SYSTEM_CONFIG {
-        string config_id PK
-        string config_type
-        json config_values
-        datetime updated_at
-        string updated_by
-        boolean is_active
-    }
-    
-    LLM_INTERACTION {
-        string interaction_id PK
-        string session_id FK
-        string llm_provider
-        string model_name
-        text prompt_text
-        text response_text
-        datetime interaction_at
-        float response_time_ms
-        int token_count
-        string interaction_type
-    }
-    
-    %% Relationships
-    SESSION ||--o{ RAW_DATASET : "has"
-    SESSION ||--o{ DATA_TYPE_ANALYSIS : "has"
-    SESSION ||--o{ PROCESSED_DATASET : "has"
-    SESSION ||--o{ FEATURE_ENGINEERING : "has"
-    SESSION ||--o{ TARGET_VARIABLE : "has"
-    SESSION ||--o{ FEATURE_SELECTION : "has"
-    SESSION ||--o{ ML_MODEL : "has"
-    SESSION ||--o{ EDA_REPORT : "has"
-    SESSION ||--o{ PREPROCESSING_OBJECTS : "has"
-    SESSION ||--o{ ERROR_LOG : "has"
-    SESSION ||--o{ LLM_INTERACTION : "has"
-    
-    ML_MODEL ||--o{ MODEL_EVALUATION : "has"
-    
-    RAW_DATASET ||--|| DATA_TYPE_ANALYSIS : "analyzed_by"
-    DATA_TYPE_ANALYSIS ||--|| PROCESSED_DATASET : "produces"
-    PROCESSED_DATASET ||--|| FEATURE_ENGINEERING : "enhanced_by"
-    FEATURE_ENGINEERING ||--|| TARGET_VARIABLE : "leads_to"
-    TARGET_VARIABLE ||--|| FEATURE_SELECTION : "guides"
-    FEATURE_SELECTION ||--|| ML_MODEL : "feeds_into"
-    
-    PROCESSED_DATASET ||--|| EDA_REPORT : "generates"
-    ML_MODEL ||--|| PREPROCESSING_OBJECTS : "uses"
+    SESSION ||--o{ DATASET : contains
+    SESSION ||--o{ FEATURES : has
+    SESSION ||--o{ MODELS : trains
+    SESSION ||--o{ REPORTS : generates
 ```
 
 ### Sequence Diagram - Complete AutoML Pipeline
