@@ -1,5 +1,6 @@
 import os
 import logging
+from pathlib import Path
 from datetime import datetime
 import structlog
 
@@ -41,7 +42,21 @@ class CustomLogger:
 
         return structlog.get_logger(logger_name)
     
+    def deleteLog(self,n=5):
+        log_dir = Path(self.logs_dir)
+        
+        log_files = sorted(
+            [f for f in log_dir.glob("*.log")],
+            key=lambda x: x.stat().st_mtime
+        )
+
+        for f in log_files[:-n]:
+            f.unlink()
+    
 if __name__ == "__main__":
-    logger = CustomLogger().get_logger(__file__)
+    logger_instance = CustomLogger()
+    logger = logger_instance.get_logger(__file__)
     logger.info("User uploaded a file", user_id=123, filename="report.csv")
     logger.error("Failed to process CSV", error="File not found", user_id=123)
+    logger_instance.deleteLog()
+   

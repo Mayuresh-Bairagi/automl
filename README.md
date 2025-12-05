@@ -431,6 +431,95 @@ flowchart TB
     style Y fill:#e8f5e8
 ```
 
+
+## System Architecture
+
+```mermaid
+graph TB
+    subgraph "Web Layer"
+        A[FastAPI Web App] --> B[File Upload Endpoint]
+    end
+    
+    subgraph "Data Processing Layer"
+        C[Data Ingestion] --> D[Data Type Analysis]
+        D --> E[Feature Engineering]
+        E --> F[Target Variable Detection]
+        F --> G[Feature Selection]
+        G --> H[ML Classification]
+    end
+    
+    subgraph "AI/LLM Layer"
+        I[Google Gemini]
+        J[Groq Models]
+        K[LangChain Framework]
+    end
+    
+    subgraph "Storage Layer"
+        L[Session Data]
+        M[Processed Files]
+        N[Trained Models]
+        O[Logs]
+    end
+    
+    subgraph "Analysis Layer"
+        P[EDA Reports]
+        Q[Model Performance]
+        R[Feature Rankings]
+    end
+    
+    B --> C
+    D -.-> I
+    D -.-> J
+    E -.-> K
+    F -.-> I
+    G -.-> J
+    C --> L
+    E --> M
+    H --> N
+    A --> O
+    E --> P
+    H --> Q
+    G --> R
+```
+
+## Workflow Diagram
+
+```mermaid
+flowchart TD
+    Start([Upload CSV/Excel File]) --> A[Data Ingestion]
+    A --> B[Session Creation]
+    B --> C[AI Data Type Analysis]
+    C --> D[Data Type Conversion]
+    D --> E[Feature Engineering]
+    E --> F{Datetime Columns?}
+    F -->|Yes| G[Extract Date Features]
+    F -->|No| H{Object Columns?}
+    G --> H
+    H -->|Yes| I[LLM Feature Extraction]
+    H -->|No| J[Target Variable Detection]
+    I --> J
+    J --> K[Problem Type Classification]
+    K --> L[Feature Selection]
+    L --> M[Statistical Analysis]
+    M --> N[LLM Feature Ranking]
+    N --> O[Data Preprocessing]
+    O --> P[Label Encoding]
+    P --> Q[MinMax Scaling]
+    Q --> R[Model Training]
+    R --> S[Hyperparameter Tuning]
+    S --> T[Model Evaluation]
+    T --> U[Model Persistence]
+    U --> V[EDA Report Generation]
+    V --> End([Complete AutoML Pipeline])
+    
+    style Start fill:#e1f5fe
+    style End fill:#c8e6c9
+    style C fill:#fff3e0
+    style I fill:#fff3e0
+    style J fill:#fff3e0
+    style N fill:#fff3e0
+```
+
 ## Features
 
 - **FastAPI Web Application**: RESTful API for file upload and processing
