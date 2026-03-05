@@ -2,6 +2,7 @@
 
 <div align="center">
 
+<<<<<<< HEAD
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-v0.104%2B-009688?style=flat-square&logo=fastapi)
 ![License](https://img.shields.io/badge/License-College%20Project-green?style=flat-square)
@@ -98,6 +99,8 @@ echo "GOOGLE_API_KEY=your_key_here" > .env
 echo "GROQ_API_KEY=your_key_here" >> .env
 echo "LLM_PROVIDER=google" >> .env
 ```
+=======
+>>>>>>> 328cd50750a76ba1a672b1b7aec0451115f8631d
 
 ### 3. Start the Server
 ```bash
@@ -653,3 +656,7 @@ Made with ❤️ for data science
 
 </div>
 
+<<<<<<< HEAD
+=======
+For issues and questions, please check the logs directory for detailed error information and stack traces.
+>>>>>>> 328cd50750a76ba1a672b1b7aec0451115f8631d
