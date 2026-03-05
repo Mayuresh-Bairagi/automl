@@ -2,7 +2,6 @@
 
 <div align="center">
 
-<<<<<<< HEAD
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-v0.104%2B-009688?style=flat-square&logo=fastapi)
 ![License](https://img.shields.io/badge/License-College%20Project-green?style=flat-square)
@@ -99,8 +98,6 @@ echo "GOOGLE_API_KEY=your_key_here" > .env
 echo "GROQ_API_KEY=your_key_here" >> .env
 echo "LLM_PROVIDER=google" >> .env
 ```
-=======
->>>>>>> 328cd50750a76ba1a672b1b7aec0451115f8631d
 
 ### 3. Start the Server
 ```bash
@@ -161,85 +158,81 @@ python -c "import fastapi, pandas, sklearn; print('✓ All dependencies installe
 
 ## 🏗️ Architecture
 
-### System Architecture
+### System Architecture Flow
 
 ```mermaid
-graph TB
-    subgraph "Interface Layer"
-        WEB[FastAPI Web Server]
-        API[RESTful API Endpoints]
+flowchart TB
+    subgraph Interface["🌐 User Interface"]
+        WEB["FastAPI Server"]
+        API["RESTful API"]
     end
     
-    subgraph "Data Processing"
-        INGEST[Data Ingestion]
-        ANALYZE[Data Type Analysis]
-        ENGINEER[Feature Engineering]
-        Clean[Data Preprocessing]
+    subgraph Pipeline["🔄 ML Pipeline"]
+        IN["📥 Data Ingestion"]
+        ANAL["🤖 AI Analysis"]
+        ENG["⚙️ Feature Engineering"]
+        TGT["🎯 Target Variable"]
+        SEL["✨ Feature Selection"]
+        TRAIN["🚀 Model Training"]
     end
     
-    subgraph "ML Pipeline"
-        TARGET[Target Detection]
-        SELECT[Feature Selection]
-        TRAIN[Model Training]
-        EVAL[Model Evaluation]
+    subgraph AI["🧠 AI Services"]
+        GM["Google Gemini"]
+        GQ["Groq AI"]
     end
     
-    subgraph "AI Services"
-        GEMINI[Google Gemini]
-        GROQ[Groq AI]
+    subgraph Storage["💾 Storage"]
+        DATA["Session Data"]
+        MODELS["Trained Models"]
+        LOGS["Application Logs"]
     end
     
-    subgraph "Output"
-        REPORTS[EDA Reports]
-        MODELS[Trained Models]
-        LOGS[Application Logs]
-    end
+    Interface -->|Submit| IN
+    IN -->|Process| ANAL
+    ANAL -->|AI Query| GM
+    ANAL -->|AI Query| GQ
+    ANAL -->|Results| ENG
+    ENG -->|Data| TGT
+    TGT -->|Analysis| SEL
+    SEL -->|Features| TRAIN
     
-    WEB --> API
-    API --> INGEST
-    INGEST --> ANALYZE
-    ANALYZE --> ENGINEER
-    ENGINEER --> TARGET
-    TARGET --> SELECT
-    SELECT --> TRAIN
-    TRAIN --> EVAL
+    IN -->|Save| DATA
+    ENG -->|Save| DATA
+    TRAIN -->|Save| MODELS
+    Interface -->|Generate| LOGS
     
-    ANALYZE -.->|AI Analysis| GEMINI
-    ENGINEER -.->|AI Features| GROQ
-    TARGET -.->|LLM Inference| GEMINI
-    
-    ENGINEER --> REPORTS
-    TRAIN --> MODELS
-    WEB --> LOGS
-    
-    style WEB fill:#e1f5fe
-    style GEMINI fill:#fff3e0
-    style GROQ fill:#fff3e0
-    style MODELS fill:#e8f5e9
-    style REPORTS fill:#f3e5f5
+    style Interface fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
+    style Pipeline fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style AI fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    style Storage fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
 ```
 
-### Processing Workflow
+### ML Processing Workflow
 
 ```mermaid
 flowchart TD
-    Start([📁 Upload Dataset]) --> Ingest[📥 Data Ingestion]
-    Ingest --> Session[🔑 Create Session ID]
-    Session --> Analyze[🤖 AI Type Analysis]
-    Analyze --> Engineer[⚙️ Feature Engineering]
-    Engineer --> Target[🎯 Detect Target]
-    Target --> Select[✨ Feature Selection]
-    Select --> Train[🚀 Train Models]
-    Train --> Eval[📊 Evaluate Models]
-    Eval --> Report[📈 Generate Report]
-    Report --> End([✅ Download Results])
+    A["📁 Upload Data"] --> B["🔑 Create Session"]
+    B --> C["📋 Data Validation"]
+    C --> D["🤖 AI Type Analysis"]
+    D --> E["⚙️ Feature Engineering"]
+    E --- E1["📅 DateTime Features"]
+    E --- E2["📝 Text Features"]
+    E --- E3["🔢 Unit Conversion"]
+    E1 --> F["🎯 Target Detection"]
+    E2 --> F
+    E3 --> F
+    F --> G["📊 Statistical Selection"]
+    G --> H["⭐ LLM Ranking"]
+    H --> I["🚀 Train Models"]
+    I --> J["📈 Evaluate Results"]
+    J --> K["📊 Generate Report"]
+    K --> L["✅ Download Results"]
     
-    style Start fill:#e1f5fe
-    style End fill:#c8e6c9
-    style Analyze fill:#fff3e0
-    style Target fill:#fff3e0
-    style Report fill:#f3e5f5
-```
+    style A fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style L fill:#c8e6c9,stroke:#1b5e20,stroke-width:2px
+    style D fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style F fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style H fill:#fff3e0,stroke:#e65100,stroke-width:2px
 
 ---
 
@@ -656,7 +649,4 @@ Made with ❤️ for data science
 
 </div>
 
-<<<<<<< HEAD
-=======
-For issues and questions, please check the logs directory for detailed error information and stack traces.
->>>>>>> 328cd50750a76ba1a672b1b7aec0451115f8631d
+
