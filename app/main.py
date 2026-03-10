@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
@@ -12,9 +12,13 @@ from src.Regression.regression import AutoMLRegressor
 from model.models import requestEDA, request_ml_models
 from src.problem_statement.target_variable import TargetVariable
 from src.Classifier.MLClassifier import AutoMLClassifier
+from app.auth import get_api_key
 
 
-app = FastAPI(title="AutoML Backend", description="FastAPI backend for AutoML project")
+app = FastAPI(
+    title="AutoML Backend",
+    description="FastAPI backend for AutoML project",
+)
 
 origins = [
     "http://localhost",
@@ -41,7 +45,7 @@ async def root():
     return {"message": "Welcome to the AutoML API"}
 
 
-@app.post("/upload")
+@app.post("/upload", dependencies=[Depends(get_api_key)])
 async def upload_file(file: UploadFile = File(...)):
     try:
         contents = await file.read()
@@ -69,7 +73,7 @@ async def upload_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
 
-@app.post("/eda")
+@app.post("/eda", dependencies=[Depends(get_api_key)])
 async def eda(request: requestEDA):
     try:
         session_id = request.session_id
@@ -85,7 +89,7 @@ async def eda(request: requestEDA):
         raise HTTPException(status_code=500, detail=f"EDA generation failed: {str(e)}")
 
 
-@app.post("/ml-models")
+@app.post("/ml-models", dependencies=[Depends(get_api_key)])
 async def ml_model(request: request_ml_models):
     try:
         session_id = request.session_id
