@@ -93,11 +93,20 @@ pip install -e .
 
 ### 2. Set Up Environment
 ```bash
-# Create .env file
-echo "GOOGLE_API_KEY=your_key_here" > .env
-echo "GROQ_API_KEY=your_key_here" >> .env
-echo "LLM_PROVIDER=google" >> .env
+# Copy the template and fill in your values
+cp .env.example .env
 ```
+
+Key variables:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GOOGLE_API_KEY` | If `LLM_PROVIDER=google` | Google Gemini API key |
+| `GROQ_API_KEY` | If `LLM_PROVIDER=groq` | Groq API key |
+| `LLM_PROVIDER` | No | `google` (default) or `groq` |
+| `AUTOML_API_KEY` | Recommended | Secret key that protects public API endpoints |
+| `AUTOML_API_URL` | MCP only | Base URL of the backend used by the MCP server |
+| `AUTOML_UPLOAD_DIR` | No | Restricts which directory the MCP server may read files from (defaults to `~`) |
 
 ### 3. Start the Server
 ```bash
@@ -107,8 +116,18 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 ### 4. Upload and Process Data
+
+Without authentication (local development – `AUTOML_API_KEY` not set):
 ```bash
 curl -X POST "http://localhost:8000/upload" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@your_dataset.csv"
+```
+
+With authentication (production / public deployment):
+```bash
+curl -X POST "https://<your-host>/upload" \
+     -H "X-API-Key: <your-AUTOML_API_KEY>" \
      -H "Content-Type: multipart/form-data" \
      -F "file=@your_dataset.csv"
 ```
@@ -242,7 +261,8 @@ flowchart TD
 ```
 automl/
 ├── app/
-│   └── main.py                         # FastAPI application entry point
+│   ├── main.py                         # FastAPI application entry point
+│   └── auth.py                         # API key authentication dependency
 │
 ├── src/
 │   ├── datasetAnalysis/
@@ -284,6 +304,7 @@ automl/
 │
 ├── logs/                              # Application logs
 │
+├── mcp_server.py                      # MCP server for Claude integration
 ├── requirements.txt                   # Python dependencies
 ├── setup.py                          # Package installation configuration
 ├── .env.example                      # Environment variables template
@@ -447,6 +468,75 @@ llm:
 | `./data/datasetAnalysis/` | Session data storage |
 | `./logs/` | Application logs |
 | `./config/config.yml` | LLM configuration |
+
+### Authentication
+
+When `AUTOML_API_KEY` is set in `.env`, all write endpoints (`/upload`, `/eda`,
+`/ml-models`) require the caller to include the key in the `X-API-Key` HTTP
+header.  The root endpoint (`GET /`) is always public.
+
+```bash
+# Generate a strong random key
+python -c "import secrets; print(secrets.token_hex(32))"
+
+# Then add to .env
+AUTOML_API_KEY=<generated-key>
+```
+
+If `AUTOML_API_KEY` is **not** set, authentication is silently disabled so
+local development stays friction-free.
+
+---
+
+## 🤖 Claude MCP Plugin
+
+AutoML ships an [MCP](https://modelcontextprotocol.io) server (`mcp_server.py`)
+that lets **Claude Desktop** (and any MCP-compatible client) interact with the
+AutoML pipeline directly via natural language.
+
+### Tools exposed to Claude
+
+| Tool | Description |
+|------|-------------|
+| `upload_dataset` | Upload a CSV/Excel file; returns a `session_id` |
+| `run_eda` | Generate an EDA HTML report for a session |
+| `train_models` | Train ML models and return performance metrics |
+
+### Setup
+
+1. Start the FastAPI backend (with `AUTOML_API_KEY` set for public deployments).
+
+2. Add the MCP server to your Claude Desktop config
+   (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+
+```json
+{
+  "mcpServers": {
+    "automl": {
+      "command": "python",
+      "args": ["/absolute/path/to/automl/mcp_server.py"],
+      "env": {
+        "AUTOML_API_URL": "https://<your-public-host>:8000",
+        "AUTOML_API_KEY": "<your-AUTOML_API_KEY>"
+      }
+    }
+  }
+}
+```
+
+3. Restart Claude Desktop.  You can now ask Claude things like:
+
+   > *"Upload `/data/sales.csv` and train a model to predict revenue."*
+
+### Running the MCP server manually
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run (communicates over stdio with the MCP client)
+python mcp_server.py
+```
 
 ---
 
