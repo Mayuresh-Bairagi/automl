@@ -1,15 +1,22 @@
-# AutoML: Automated Machine Learning Framework
+# AutoML — Automated Machine Learning Framework
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)
-![FastAPI](https://img.shields.io/badge/FastAPI-v0.104%2B-009688?style=flat-square&logo=fastapi)
-![License](https://img.shields.io/badge/License-College%20Project-green?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![LangChain](https://img.shields.io/badge/LangChain-LangGraph-1C3C3C?style=for-the-badge&logo=chainlink&logoColor=white)](https://langchain.com/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![License](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-0.1.1-blue?style=for-the-badge)
 
-An intelligent **Automated Machine Learning (AutoML)** framework that streamlines end-to-end machine learning workflows. From data ingestion to model deployment, AutoML handles feature engineering, data analysis, and predictive modeling—all powered by cutting-edge AI services.
+<br/>
 
-[Features](#-features) • [Quick Start](#-quick-start) • [Installation](#-installation) • [Documentation](#-documentation) • [Contributing](#-contributing)
+> **An AI-powered, end-to-end AutoML framework** that automates every stage of the machine learning pipeline — from data ingestion and feature engineering to model training, evaluation, and reporting — all orchestrated through a LangGraph agent and exposed via a clean REST API.
+
+<br/>
+
+[Features](#-features) &nbsp;•&nbsp; [Quick Start](#-quick-start) &nbsp;•&nbsp; [Architecture](#-architecture) &nbsp;•&nbsp; [API Reference](#-api-reference) &nbsp;•&nbsp; [Contributing](#-contributing)
 
 </div>
 
@@ -17,222 +24,237 @@ An intelligent **Automated Machine Learning (AutoML)** framework that streamline
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
+- [Overview](#-overview)
 - [Features](#-features)
+- [Architecture](#-architecture)
+- [ML / LLM Pipeline](#-ml--llm-pipeline)
+- [Project Structure](#-project-structure)
 - [Quick Start](#-quick-start)
 - [Installation](#-installation)
-- [Architecture](#-architecture)
-- [Project Structure](#-project-structure)
 - [Usage Guide](#-usage-guide)
-- [Configuration](#-configuration)
 - [API Reference](#-api-reference)
+- [Configuration](#-configuration)
+- [Screenshots](#-screenshots)
+- [Future Improvements](#-future-improvements)
 - [Contributing](#-contributing)
-- [Author](#-author)
+- [License](#-license)
 
 ---
 
-## Overview
+## 🔍 Overview
 
-AutoML is a comprehensive machine learning automation framework designed to reduce the complexity of building, training, and deploying predictive models. By leveraging AI-powered data analysis and intelligent feature engineering, AutoML enables data scientists and analysts to build high-quality models with minimal manual effort.
+### Problem Statement
 
-**Key Capabilities:**
-- 🤖 AI-powered data type detection and conversion
-- 🔧 Automated feature engineering with temporal and text processing
-- 🎯 Intelligent target variable identification
-- 📊 Advanced feature selection and ranking
-- 🚀 Multi-algorithm model training with hyperparameter tuning
-- 📈 Interactive EDA reports and visualizations
-- 🌐 RESTful API with FastAPI for seamless integration
+Building machine learning models is a multi-step process that requires deep expertise in data cleaning, feature engineering, algorithm selection, and hyperparameter tuning. This process is time-consuming, error-prone, and demands significant manual effort.
+
+### Solution
+
+**AutoML** eliminates this complexity by providing an intelligent, fully automated pipeline that:
+
+- 🤖 Uses **LLMs (Google Gemini / Groq)** to understand your data and make intelligent decisions at every pipeline stage
+- ⚙️ Automates **feature engineering**, **type inference**, **target detection**, and **feature selection**
+- 🚀 Trains and benchmarks **multiple ML algorithms** simultaneously with automated hyperparameter tuning
+- 📊 Delivers **interactive EDA reports**, **dashboards**, and **model performance summaries**
+- 💬 Lets you **ask questions about your data in plain English** via a conversational Q&A interface
+- 🔗 Exposes everything through a **production-ready REST API**
 
 ---
 
 ## ✨ Features
 
-### Data Processing & Analysis
-- **Intelligent Data Ingestion**: Automated CSV/Excel file handling with session management
-- **AI-Powered Data Type Analysis**: LLM-based intelligent data type inference and conversion
-- **Advanced Feature Engineering**: 
-  - Automated datetime feature extraction (day, month, weekday, hour, minute)
-  - LLM-driven text feature generation from object columns
-  - Unit conversion and duration processing
-  - Missing value handling and data normalization
-- **Comprehensive Data Analysis**: Automated EDA with interactive HTML reports
+### 🗄️ Data Processing
+| Feature | Description |
+|---|---|
+| **Smart Data Ingestion** | CSV / Excel file upload with automatic session management |
+| **AI Type Detection** | LLM-based inference of column data types with automatic conversion |
+| **Datetime Engineering** | Extracts day, month, weekday, hour, and minute from date columns |
+| **Text Feature Generation** | LLM-driven numeric feature extraction from free-text columns |
+| **Unit Conversion** | Parses values like `"15 kg"` → `15.0` or `"2h 30min"` → `150` minutes |
+| **Missing Value Handling** | Intelligent imputation and normalization |
 
-### Machine Learning & Model Management
-- **Target Variable Detection**: AI-powered identification of target variables and problem types
-- **Intelligent Feature Selection**: Statistical and LLM-based feature ranking and selection
-- **Automated ML Classification**: 
-  - Multiple algorithms: Logistic Regression, Random Forest, Gradient Boosting, SVM, KNN, Decision Trees
-  - Automatic hyperparameter tuning with GridSearchCV
-  - Data preprocessing with label encoding and MinMax scaling
-  - Comprehensive performance metrics
-- **Model Persistence**: Automatic model serialization and loading
+### 🤖 AI & LLM
+| Feature | Description |
+|---|---|
+| **Multi-LLM Support** | Switch between Google Gemini and Groq via a single config flag |
+| **LangGraph Orchestration** | Stateful, conditional agent graph for full-pipeline automation |
+| **Conversational Q&A** | Ask natural language questions about any loaded dataset |
+| **Prompt Registry** | Centralized, version-controlled prompt templates for all LLM tasks |
 
-### AI & Automation
-- **Multi-LLM Support**: Integration with Google Gemini and Groq for intelligent analysis
-- **LangChain Framework**: Leverage advanced language model capabilities
-- **Smart Prompting**: Pre-configured prompt templates for various analysis tasks
+### 📐 Machine Learning
+| Feature | Description |
+|---|---|
+| **Target Variable Detection** | AI identifies the target column and classifies the problem type |
+| **Feature Selection** | Statistical (chi², correlation, mutual info) + LLM-ranked feature selection |
+| **Classification** | Logistic Regression, Random Forest, Gradient Boosting, SVM, KNN, Decision Tree, XGBoost, LightGBM |
+| **Regression** | Linear, Ridge, Lasso, ElasticNet, SVR, Random Forest, Gradient Boosting, XGBoost, LightGBM |
+| **Hyperparameter Tuning** | Automated GridSearchCV with cross-validation scoring |
+| **Model Persistence** | Serializes and stores trained models per session |
 
-### Application & Logging
-- **FastAPI Web Application**: RESTful API with CORS support for easy integration
-- **Structured Logging**: JSON-formatted logs with dual file/console output
-- **Custom Exception Handling**: Detailed error tracking and debugging information
-- **Configuration Management**: YAML-based configuration for easy customization
+### 📊 Reporting & Visualization
+| Feature | Description |
+|---|---|
+| **Interactive EDA** | Full dataset profiling reports via `ydata-profiling` |
+| **Plotly Dashboards** | Distribution, correlation, scatter, boxplot, and missing-value charts |
+| **Model Leaderboard** | Side-by-side accuracy, F1, precision, recall, R², MAE, RMSE comparison |
 
----
-
-## 🚀 Quick Start
-
-### 1. Install Dependencies
-```bash
-git clone <repository-url>
-cd automl
-pip install -r requirements.txt
-pip install -e .
-```
-
-### 2. Set Up Environment
-```bash
-# Create .env file
-echo "GOOGLE_API_KEY=your_key_here" > .env
-echo "GROQ_API_KEY=your_key_here" >> .env
-echo "LLM_PROVIDER=google" >> .env
-```
-
-### 3. Start the Server
-```bash
-python app/main.py
-# or
-uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
-### 4. Upload and Process Data
-```bash
-curl -X POST "http://localhost:8000/upload" \
-     -H "Content-Type: multipart/form-data" \
-     -F "file=@your_dataset.csv"
-```
-
----
-
-## 📦 Installation
-
-### Prerequisites
-- Python 3.8 or higher
-- pip package manager
-- API keys for Google Generative AI and/or Groq
-
-### Step-by-Step Installation
-
-1. **Clone and Setup**
-```bash
-git clone <repository-url>
-cd automl
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-2. **Install Dependencies**
-```bash
-pip install -r requirements.txt
-pip install -e .
-```
-
-3. **Configure Environment**
-```bash
-# Copy environment template
-cp .env.example .env
-
-# Edit .env with your API keys
-GOOGLE_API_KEY=your_google_api_key
-GROQ_API_KEY=your_groq_api_key
-LLM_PROVIDER=google  # or 'groq'
-```
-
-4. **Verify Installation**
-```bash
-python -c "import fastapi, pandas, sklearn; print('✓ All dependencies installed')"
-```
+### 🌐 API & Infrastructure
+| Feature | Description |
+|---|---|
+| **FastAPI Backend** | Async REST API with CORS support and file-upload handling (50 MB max) |
+| **Session Management** | Isolated, timestamped sessions keep multiple experiments independent |
+| **Structured Logging** | JSON-formatted logs with automatic rotation and archiving |
+| **Custom Exceptions** | Rich error context: file name, line number, and full traceback captured |
 
 ---
 
 ## 🏗️ Architecture
 
-### System Architecture Flow
+### System Architecture
 
 ```mermaid
 flowchart TB
-    subgraph Interface["🌐 User Interface"]
-        WEB["FastAPI Server"]
-        API["RESTful API"]
+    subgraph Client["👤 Client"]
+        U["User / Application"]
     end
-    
-    subgraph Pipeline["🔄 ML Pipeline"]
-        IN["📥 Data Ingestion"]
-        ANAL["🤖 AI Analysis"]
-        ENG["⚙️ Feature Engineering"]
-        TGT["🎯 Target Variable"]
-        SEL["✨ Feature Selection"]
-        TRAIN["🚀 Model Training"]
+
+    subgraph API["🌐 REST API  (FastAPI)"]
+        EP1["POST /upload"]
+        EP2["POST /agent/run"]
+        EP3["POST /eda"]
+        EP4["POST /ml-models"]
+        EP5["POST /chat"]
+        EP6["POST /dashboard/charts"]
+        EP7["GET  /"]
     end
-    
-    subgraph AI["🧠 AI Services"]
-        GM["Google Gemini"]
-        GQ["Groq AI"]
+
+    subgraph Agent["🤖 LangGraph Agent"]
+        N1["load_dataset"]
+        N2["detect_target"]
+        N3["train_models"]
+        N4["generate_report"]
     end
-    
+
+    subgraph Core["⚙️ Core Pipeline"]
+        C1["Data Ingestion"]
+        C2["Type Analysis"]
+        C3["Feature Engineering"]
+        C4["Feature Selection"]
+        C5["Model Training"]
+        C6["EDA / Dashboard"]
+        C7["Dataset Q&A"]
+    end
+
+    subgraph LLM["🧠 LLM Services"]
+        L1["Google Gemini\n(gemini-2.0-flash)"]
+        L2["Groq\n(deepseek-r1-distill-llama-70b)"]
+    end
+
     subgraph Storage["💾 Storage"]
-        DATA["Session Data"]
-        MODELS["Trained Models"]
-        LOGS["Application Logs"]
+        S1["Session Data\n./data/datasetAnalysis/"]
+        S2["Trained Models\n.joblib files"]
+        S3["Application Logs\n./logs/"]
     end
-    
-    Interface -->|Submit| IN
-    IN -->|Process| ANAL
-    ANAL -->|AI Query| GM
-    ANAL -->|AI Query| GQ
-    ANAL -->|Results| ENG
-    ENG -->|Data| TGT
-    TGT -->|Analysis| SEL
-    SEL -->|Features| TRAIN
-    
-    IN -->|Save| DATA
-    ENG -->|Save| DATA
-    TRAIN -->|Save| MODELS
-    Interface -->|Generate| LOGS
-    
-    style Interface fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
-    style Pipeline fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
-    style AI fill:#fff3e0,stroke:#ff9800,stroke-width:2px
-    style Storage fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+
+    U -->|HTTP Request| API
+    API -->|Orchestrate| Agent
+    API -->|Direct Call| Core
+    Agent --> Core
+    Core -->|LLM Queries| LLM
+    Core -->|Persist| Storage
+
+    style Client fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style API fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
+    style Agent fill:#fff8e1,stroke:#f57f17,stroke-width:2px
+    style Core fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style LLM fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    style Storage fill:#efebe9,stroke:#4e342e,stroke-width:2px
 ```
 
-### ML Processing Workflow
+### API Request Flow (Sequence Diagram)
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant API as FastAPI Server
+    participant Session as Session Manager
+    participant Pipeline as ML Pipeline
+    participant LLM as LLM Service
+    participant DB as File Storage
+
+    User->>API: POST /upload (CSV/Excel)
+    API->>Session: Create new session ID
+    Session->>DB: Save raw dataset
+    API-->>User: { session_id, rows, columns }
+
+    User->>API: POST /agent/run { session_id, problem_statement }
+    API->>Pipeline: load_dataset(session_id)
+    Pipeline->>DB: Read processed CSV
+    Pipeline->>LLM: detect_target(columns, problem_statement)
+    LLM-->>Pipeline: { target_variable, problem_type }
+    Pipeline->>LLM: select_features(dataset, problem_type)
+    LLM-->>Pipeline: { selected_features, rankings }
+    Pipeline->>Pipeline: train_models(features, target)
+    Pipeline->>DB: Persist trained models
+    Pipeline-->>API: { model_leaderboard, best_model }
+    API-->>User: Full pipeline report
+
+    User->>API: POST /chat { session_id, question }
+    API->>LLM: generate_pandas_code(question, schema)
+    LLM-->>API: Python code snippet
+    API->>DB: Execute code on dataset (sandboxed)
+    API-->>User: { answer, code }
+```
+
+---
+
+## 🔬 ML / LLM Pipeline
+
+### End-to-End Pipeline Flow
 
 ```mermaid
 flowchart TD
-    A["📁 Upload Data"] --> B["🔑 Create Session"]
-    B --> C["📋 Data Validation"]
-    C --> D["🤖 AI Type Analysis"]
-    D --> E["⚙️ Feature Engineering"]
-    E --- E1["📅 DateTime Features"]
-    E --- E2["📝 Text Features"]
-    E --- E3["🔢 Unit Conversion"]
-    E1 --> F["🎯 Target Detection"]
-    E2 --> F
-    E3 --> F
-    F --> G["📊 Statistical Selection"]
-    G --> H["⭐ LLM Ranking"]
-    H --> I["🚀 Train Models"]
-    I --> J["📈 Evaluate Results"]
-    J --> K["📊 Generate Report"]
-    K --> L["✅ Download Results"]
-    
+    A(["📁 Upload Dataset"]) --> B["Create Session\n& Validate File"]
+    B --> C["🤖 AI Data Type Analysis\nLLM infers correct types\nGenerates conversion code"]
+    C --> D["⚙️ Feature Engineering"]
+    D --> D1["📅 DateTime\nExtraction"]
+    D --> D2["📝 Text Feature\nGeneration via LLM"]
+    D --> D3["🔢 Unit &\nDuration Parsing"]
+    D1 & D2 & D3 --> E["🎯 Target Variable Detection\nLLM identifies target column\n& problem type"]
+    E --> F{"Problem Type?"}
+    F -->|classification| G1["Chi² + Mutual Info\nFeature Scoring"]
+    F -->|regression| G2["Correlation\nAnalysis"]
+    F -->|clustering| G3["Variance-Based\nSelection"]
+    G1 & G2 & G3 --> H["⭐ LLM Feature Ranking\nCombines statistical scores\nwith semantic understanding"]
+    H --> I["🚀 Multi-Algorithm Training\n+ GridSearchCV Tuning"]
+    I --> I1["Logistic Reg / Linear"]
+    I --> I2["Random Forest / Gradient Boosting"]
+    I --> I3["XGBoost / LightGBM"]
+    I --> I4["SVM / KNN / ElasticNet"]
+    I1 & I2 & I3 & I4 --> J["📈 Evaluation & Leaderboard"]
+    J --> K["📊 EDA Report\n+ Interactive Dashboard"]
+    K --> L(["✅ Results & Model Files"])
+
     style A fill:#e1f5fe,stroke:#01579b,stroke-width:2px
     style L fill:#c8e6c9,stroke:#1b5e20,stroke-width:2px
-    style D fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    style F fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style C fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style E fill:#fff3e0,stroke:#e65100,stroke-width:2px
     style H fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style F fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+```
+
+### LangGraph Agent State Machine
+
+```mermaid
+stateDiagram-v2
+    [*] --> load_dataset: POST /agent/run
+    load_dataset --> detect_target: success
+    load_dataset --> error_state: error
+    detect_target --> train_models: success
+    detect_target --> error_state: error
+    train_models --> generate_report: success
+    train_models --> error_state: error
+    generate_report --> [*]: Return structured report
+    error_state --> [*]: Return error details
 ```
 
 ---
@@ -242,82 +264,172 @@ flowchart TD
 ```
 automl/
 ├── app/
-│   └── main.py                         # FastAPI application entry point
+│   └── main.py                          # FastAPI app — routes, CORS, file handling
 │
 ├── src/
+│   ├── agent/
+│   │   └── automl_agent.py              # LangGraph stateful orchestration agent
+│   │
 │   ├── datasetAnalysis/
-│   │   ├── data_ingestion.py          # CSV/Excel file processing & session management
-│   │   └── data_type_analysis.py      # AI-powered data type inference & conversion
+│   │   ├── data_ingestion.py            # Session creation, file save/load, cleanup
+│   │   └── data_type_analysis.py        # LLM-powered column type inference & conversion
 │   │
 │   ├── dataCleaning/
-│   │   └── featureEngineering01.py    # Automated feature extraction & transformation
+│   │   └── featureEngineering01.py      # Datetime, text, unit, duration feature extraction
 │   │
 │   ├── problem_statement/
-│   │   ├── target_variable.py         # AI target variable detection & classification
-│   │   └── AutoFeatureSelector.py     # Intelligent feature selection & ranking
+│   │   ├── target_variable.py           # LLM target variable & problem-type detection
+│   │   └── AutoFeatureSelector.py       # Statistical + LLM feature selection & ranking
 │   │
 │   ├── Classifier/
-│   │   └── MLClassifier.py            # Multi-algorithm ML training & tuning
+│   │   └── MLClassifier.py              # Multi-algorithm classification with GridSearchCV
+│   │
+│   ├── Regression/
+│   │   └── regression.py                # Multi-algorithm regression with GridSearchCV
+│   │
+│   ├── data_qa/
+│   │   └── dataset_qa.py                # Sandboxed NL Q&A over datasets via LLM
 │   │
 │   └── data_dashboard/
-│       └── eda.py                     # Automated EDA & HTML report generation
+│       ├── eda.py                        # ydata-profiling HTML EDA report generation
+│       └── interactive_dashboard.py      # Plotly interactive chart generation
 │
 ├── model/
-│   └── models.py                      # Pydantic data validation models
+│   └── models.py                         # Pydantic request/response validation schemas
+│
+├── Propmt/
+│   └── propmt_lib.py                     # Central prompt template registry (6 prompts)
 │
 ├── utils/
-│   ├── model_loader.py                # LLM & embedding model initialization
-│   └── config_loader.py               # YAML configuration management
+│   ├── model_loader.py                   # LLM & embedding model initialization
+│   └── config_loader.py                  # YAML config loader
 │
 ├── logger/
-│   └── customlogger.py                # Structured JSON logging
+│   └── customlogger.py                   # Structlog JSON logging + file rotation
 │
 ├── expection/
-│   └── customExpection.py             # Custom exception handling & tracking
+│   └── customExpection.py                # Custom exception with traceback capture
 │
 ├── config/
-│   └── config.yml                     # LLM provider configuration
+│   └── config.yml                        # LLM provider & model settings
 │
 ├── data/
-│   ├── Data_Train.csv                 # Training dataset
-│   └── datasetAnalysis/               # Session-based processing outputs
+│   ├── Data_Train.csv                    # Sample training dataset
+│   ├── weatherAUS.csv                    # Example dataset
+│   └── datasetAnalysis/                  # Session-isolated processing outputs
 │
-├── logs/                              # Application logs
+├── logs/                                 # Rotating JSON application logs
 │
-├── requirements.txt                   # Python dependencies
-├── setup.py                          # Package installation configuration
-├── .env.example                      # Environment variables template
-└── README.md                         # This file
+├── requirements.txt                      # Python dependencies
+├── setup.py                              # Package installation (v0.1.1)
+├── .env.example                          # Environment variable template
+└── README.md
+```
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Mayuresh-Bairagi/automl.git
+cd automl
+
+# 2. Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate          # Windows: venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+pip install -e .
+
+# 4. Configure environment variables
+cp .env.example .env
+# → Edit .env and add your API keys (see Configuration section)
+
+# 5. Start the API server
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+# 6. Upload a dataset and run the full pipeline
+curl -X POST "http://localhost:8000/upload" \
+     -F "file=@your_dataset.csv"
+
+curl -X POST "http://localhost:8000/agent/run" \
+     -H "Content-Type: application/json" \
+     -d '{"session_id": "<returned_session_id>", "problem_statement": "Predict customer churn"}'
+```
+
+---
+
+## 📦 Installation
+
+### Prerequisites
+
+| Requirement | Version |
+|---|---|
+| Python | 3.8+ |
+| pip | latest |
+| Google Generative AI API key | [Get one here](https://aistudio.google.com/) |
+| Groq API key *(optional)* | [Get one here](https://console.groq.com/) |
+
+### Step-by-Step
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/Mayuresh-Bairagi/automl.git
+cd automl
+```
+
+**2. Create a virtual environment**
+```bash
+python -m venv venv
+source venv/bin/activate    # Windows: venv\Scripts\activate
+```
+
+**3. Install all dependencies**
+```bash
+pip install -r requirements.txt
+pip install -e .
+```
+
+**4. Set up environment variables**
+```bash
+cp .env.example .env
+# Open .env and fill in your API keys
+```
+
+**5. Verify the installation**
+```bash
+python -c "import fastapi, pandas, sklearn, langchain; print('✓ All core dependencies installed')"
+```
+
+**6. Start the server**
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+# API docs available at: http://localhost:8000/docs
 ```
 
 ---
 
 ## 📚 Usage Guide
 
-### Data Ingestion & Processing
+### Data Ingestion
 
 ```python
 from src.datasetAnalysis.data_ingestion import datasetHandler
 
-# Initialize handler
 handler = datasetHandler()
-
-# Load CSV/Excel file
-df = handler.save_dataset(uploaded_file)
-print(f"Loaded {len(df)} rows, {len(df.columns)} columns")
+df, session_id = handler.save_dataset(uploaded_file)
+print(f"Session: {session_id} | {len(df)} rows × {len(df.columns)} columns")
 ```
 
-### AI-Powered Data Type Analysis
+### AI Data Type Analysis
 
 ```python
 from src.datasetAnalysis.data_type_analysis import DataTypeAnalyzer
 
 analyzer = DataTypeAnalyzer("path/to/dataset.csv")
-
-# Get AI recommendations
-recommendations = analyzer.analyze_data_type()
-
-# Apply conversions
+recommendations = analyzer.analyze_data_type()   # LLM inference
 converted_df = analyzer.apply_conversions(df, recommendations)
 ```
 
@@ -327,15 +439,8 @@ converted_df = analyzer.apply_conversions(df, recommendations)
 from src.dataCleaning.featureEngineering01 import FeatureEngineer1
 
 fe = FeatureEngineer1("path/to/dataset.csv")
-
-# Auto-generate features
 processed_df, session_id = fe.generate_features()
-
-# Automatically handles:
-# ✓ Datetime → day, month, weekday, hour, minute
-# ✓ Text columns → LLM-generated features
-# ✓ Units → Numeric extraction ("15 kg" → 15.0)
-# ✓ Durations → Conversion ("2h 30min" → 150 minutes)
+# Handles: datetime extraction, text→numeric, unit parsing, duration conversion
 ```
 
 ### Target Variable Detection
@@ -343,87 +448,170 @@ processed_df, session_id = fe.generate_features()
 ```python
 from src.problem_statement.target_variable import TargetVariable
 
-target_handler = TargetVariable(session_id="your_session_id")
+tv = TargetVariable(session_id="your_session_id")
+result, df = tv.get_target_variable("Predict house prices")
 
-# AI-powered detection
-result, df = target_handler.get_target_variable("Predict house prices")
-
-print(f"🎯 Target Variable: {result['target_variable']}")
-print(f"📊 Problem Type: {result['problem_type']}")  # regression/classification/clustering
-print(f"📝 Reasoning: {result['justification']}")
+print(f"Target : {result['target_variable']}")
+print(f"Type   : {result['problem_type']}")   # regression | classification | clustering
+print(f"Reason : {result['justification']}")
 ```
 
-### Intelligent Feature Selection
+### Feature Selection
 
 ```python
 from src.problem_statement.AutoFeatureSelector import FeatureSelector
 
 selector = FeatureSelector(session_id, "Predict customer churn")
-
-# Statistical + LLM-based selection
 response = selector.llm_response()
 
-print(f"✨ Selected: {response['selected_features']}")
-print(f"❌ Removed: {response['dropped_features']}")
-print(f"⭐ Rankings: {response['ranked_features']}")
+print("Selected :", response['selected_features'])
+print("Dropped  :", response['dropped_features'])
+print("Rankings :", response['ranked_features'])
 ```
 
-### Automated Model Training
+### Classification Training
 
 ```python
 from src.Classifier.MLClassifier import AutoMLClassifier
 
-classifier = AutoMLClassifier(
+clf = AutoMLClassifier(
     session_id="your_session_id",
     problem_statement="Customer churn prediction",
     result=target_result,
     df=dataframe
 )
-
-# Train all models with hyperparameter optimization
-results_df, trained_models, model_paths = classifier.train_models()
-
-# View performance comparison
-print(results_df)
-#            Model  Accuracy  F1_Score              Best_Params
-# 0  RandomForest     0.95      0.94  {'n_estimators': 100}
-# 1    LogisticRegression  0.92    0.91  {'C': 1}
+results_df, trained_models, model_paths = clf.train_models()
+print(results_df[["Model", "Accuracy", "F1_Score", "Best_Params"]])
 ```
 
-### Exploratory Data Analysis
+### Regression Training
+
+```python
+from src.Regression.regression import AutoMLRegressor
+
+reg = AutoMLRegressor(
+    session_id="your_session_id",
+    problem_statement="Predict house price",
+    result=target_result,
+    df=dataframe
+)
+results_df, trained_models, model_paths = reg.train_models()
+print(results_df[["Model", "R2_Score", "MAE", "RMSE"]])
+```
+
+### Natural Language Q&A
+
+```python
+from src.data_qa.dataset_qa import DatasetQA
+
+qa = DatasetQA(session_id="your_session_id")
+answer = qa.answer_question("What is the average age of customers who churned?")
+print(answer["result"])
+print(answer["code"])   # Generated pandas code
+```
+
+### EDA Report
 
 ```python
 from src.data_dashboard.eda import EDA
 
-# Generate interactive HTML report
 eda = EDA(session_id="your_session_id")
 html_path = eda.generate_report()
+# Opens a full ydata-profiling HTML report
+```
 
-# Includes:
-# 📊 Dataset statistics & profiling
-# 📈 Distribution plots & correlations
-# ❌ Missing values analysis
-# 🎯 Data quality insights
+---
+
+## 🔌 API Reference
+
+Base URL: `http://localhost:8000`  
+Interactive docs: `http://localhost:8000/docs`
+
+| Method | Endpoint | Description | Key Body / Params |
+|---|---|---|---|
+| `GET` | `/` | Health check | — |
+| `POST` | `/upload` | Upload CSV / Excel dataset | `file` (multipart) |
+| `POST` | `/eda` | Generate interactive EDA HTML report | `session_id` |
+| `POST` | `/ml-models` | Train classification or regression models | `session_id`, `problem_statement` |
+| `POST` | `/agent/run` | Run full LangGraph pipeline (end-to-end) | `session_id`, `problem_statement` |
+| `POST` | `/chat` | Natural language Q&A over a dataset | `session_id`, `question` |
+| `POST` | `/dashboard/charts` | Generate Plotly interactive charts | `session_id`, `chart_types` |
+
+### Example: Upload Dataset
+
+```bash
+curl -X POST "http://localhost:8000/upload" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@data.csv"
+```
+
+```json
+{
+  "status": "success",
+  "session_id": "session_id_20260322_192000_abc12345",
+  "rows": 1000,
+  "columns": 25,
+  "file_path": "./data/datasetAnalysis/session_id_.../engineered_data.csv"
+}
+```
+
+### Example: Run Full Pipeline
+
+```bash
+curl -X POST "http://localhost:8000/agent/run" \
+     -H "Content-Type: application/json" \
+     -d '{"session_id": "session_id_20260322_192000_abc12345", "problem_statement": "Predict customer churn"}'
+```
+
+```json
+{
+  "status": "success",
+  "target_variable": "Churn",
+  "problem_type": "classification",
+  "selected_features": ["tenure", "MonthlyCharges", "Contract"],
+  "model_leaderboard": [
+    { "Model": "XGBoost",      "Accuracy": 0.95, "F1_Score": 0.94 },
+    { "Model": "RandomForest", "Accuracy": 0.93, "F1_Score": 0.92 }
+  ],
+  "best_model_path": "./data/datasetAnalysis/.../XGBoost.joblib"
+}
+```
+
+### Example: Chat with Your Data
+
+```bash
+curl -X POST "http://localhost:8000/chat" \
+     -H "Content-Type: application/json" \
+     -d '{"session_id": "session_id_...", "question": "What is the average monthly charge for churned customers?"}'
+```
+
+```json
+{
+  "answer": "The average monthly charge for churned customers is $74.44",
+  "code": "df[df['Churn']==1]['MonthlyCharges'].mean()"
+}
 ```
 
 ---
 
 ## ⚙️ Configuration
 
-### Environment Variables (.env)
+### Environment Variables
 
-```bash
-# LLM Configuration
-GOOGLE_API_KEY=your_google_api_key_here
+Create a `.env` file in the project root (copy from `.env.example`):
+
+```dotenv
+# ─── LLM Provider ──────────────────────────────────────────────
+GOOGLE_API_KEY=your_google_generative_ai_key_here
 GROQ_API_KEY=your_groq_api_key_here
-LLM_PROVIDER=google              # 'google' or 'groq'
+LLM_PROVIDER=google          # 'google' or 'groq'
 
-# Data Configuration
+# ─── Storage Paths ─────────────────────────────────────────────
 DATA_STORAGE_PATH=./data/datasetAnalysis
 LOGS_PATH=./logs
 ```
 
-### LLM Settings (config/config.yml)
+### LLM Configuration (`config/config.yml`)
 
 ```yaml
 llm:
@@ -432,7 +620,7 @@ llm:
     model_name: "gemini-2.0-flash"
     temperature: 0.0
     max_output_tokens: 2048
-  
+
   groq:
     provider: "groq"
     model_name: "deepseek-r1-distill-llama-70b"
@@ -440,172 +628,78 @@ llm:
     max_output_tokens: 2048
 ```
 
-### Application Paths
+### Configuration Reference
 
-| Path | Purpose |
-|------|---------|
-| `./data/datasetAnalysis/` | Session data storage |
-| `./logs/` | Application logs |
-| `./config/config.yml` | LLM configuration |
-
----
-
-## 🔌 API Reference
-
-### File Upload Endpoint
-
-**POST** `/upload`
-
-Upload a CSV or Excel file for processing
-
-```bash
-curl -X POST "http://localhost:8000/upload" \
-     -H "Content-Type: multipart/form-data" \
-     -F "file=@data.csv"
-```
-
-**Response:**
-```json
-{
-  "status": "success",
-  "session_id": "session_id_20260306_120000_abc123",
-  "rows": 1000,
-  "columns": 25,
-  "file_path": "path/to/processed/file"
-}
-```
-
-### Status Endpoint
-
-**GET** `/status/{session_id}`
-
-Get processing status for a session
-
-```bash
-curl "http://localhost:8000/status/session_id_20260306_120000_abc123"
-```
+| Variable | Default | Description |
+|---|---|---|
+| `LLM_PROVIDER` | `google` | Active LLM backend (`google` or `groq`) |
+| `GOOGLE_API_KEY` | — | Google Generative AI API key |
+| `GROQ_API_KEY` | — | Groq API key |
+| `DATA_STORAGE_PATH` | `./data/datasetAnalysis` | Directory for session data |
+| `LOGS_PATH` | `./logs` | Directory for application logs |
 
 ---
 
-## 🧠 Key Components
+## 🖼️ Screenshots
 
-### Core Modules
+> **Note:** The paths below are placeholders. Replace them with real screenshots once the application is running (e.g., save them under `docs/screenshots/`).
 
-| Module | Purpose | Key Features |
-|--------|---------|--------------|
-| **data_ingestion.py** | File processing | Session management, validation |
-| **data_type_analysis.py** | Data type detection | AI inference, type conversion |
-| **featureEngineering01.py** | Feature creation | Datetime, text, unit processing |
-| **target_variable.py** | Target detection | Problem classification, AI analysis |
-| **AutoFeatureSelector.py** | Feature selection | Correlation, mutual info, ranking |
-| **MLClassifier.py** | Model training | Multi-algorithm, hyperparameter tuning |
-| **eda.py** | Data analysis | Interactive reports, visualizations |
-
-### Utility Classes
-
-```python
-from logger.customlogger import CustomLogger
-from expection.customExpection import AutoML_Exception
-from utils.config_loader import ConfigLoader
-from utils.model_loader import ModelLoader
-
-# Structured logging
-logger = CustomLogger().get_logger('MyModule')
-logger.info("Processing started", user_id=123, filename="data.csv")
-
-# Exception handling
-try:
-    # Your code
-    pass
-except Exception as e:
-    raise AutoML_Exception("Custom error message", e)
-```
+| View | Preview |
+|---|---|
+| FastAPI Interactive Docs (`/docs`) | ![API Docs](docs/screenshots/api_docs.png) |
+| EDA Report (ydata-profiling) | ![EDA Report](docs/screenshots/eda_report.png) |
+| Interactive Dashboard (Plotly) | ![Dashboard](docs/screenshots/dashboard.png) |
+| Model Leaderboard Response | ![Leaderboard](docs/screenshots/model_leaderboard.png) |
 
 ---
 
-## 🛠️ Development
+## 🔮 Future Improvements
 
-### Running Tests
-
-```bash
-# Test data ingestion
-python src/datasetAnalysis/data_ingestion.py
-
-# Test data type analysis
-python src/datasetAnalysis/data_type_analysis.py
-
-# Test feature engineering
-python src/dataCleaning/featureEngineering01.py
-
-# Test ML pipeline
-python src/Classifier/MLClassifier.py
-
-# Test EDA
-python src/data_dashboard/eda.py
-```
-
-### Running the Application
-
-```bash
-# Development server with auto-reload
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-
-# Production server
-python app/main.py
-```
-
----
-
-## 📋 Dependencies
-
-**Core Framework:**
-- FastAPI & Uvicorn - Web framework & ASGI server
-- Pandas & NumPy - Data manipulation & numerical computing
-
-**Machine Learning:**
-- Scikit-learn - ML algorithms & preprocessing
-- XGBoost, LightGBM, CatBoost - Advanced gradient boosting
-
-**Data Visualization & Analysis:**
-- Matplotlib, Seaborn, Plotly - Data visualization
-- Pydantic - Data validation
-
-**AI & LLM:**
-- LangChain - LLM orchestration framework
-- Google Generative AI - Google's Gemini models
-- Groq - High-speed LLM inference
-
-**Utilities:**
-- Structlog - Structured JSON logging
-- PyYAML - Configuration parsing
-- Joblib - Model serialization
-
-See `requirements.txt` for complete list with versions.
+- [ ] **Web UI** — React/Streamlit frontend for no-code model building
+- [ ] **Model Deployment** — One-click export to Docker / FastAPI endpoint
+- [ ] **Real-Time Monitoring** — Live model performance and data drift tracking
+- [ ] **Advanced HPO** — Optuna / Ray Tune integration for better hyperparameter search
+- [ ] **Additional Data Formats** — Parquet, JSON, and database connector support
+- [ ] **Model Explainability** — SHAP and LIME integration for interpretability
+- [ ] **Batch Inference** — Support for large-scale offline prediction jobs
+- [ ] **Clustering Pipeline** — Full unsupervised learning workflow
+- [ ] **CI/CD Pipeline** — Automated testing and deployment workflows
+- [ ] **Multi-User Support** — Authentication and per-user session isolation
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how to get started:
+Contributions are welcome! Please follow these steps:
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and commit: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+1. **Fork** the repository
+2. **Create** a feature branch
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Commit** your changes with a clear message
+   ```bash
+   git commit -m "feat: add your feature description"
+   ```
+4. **Push** to your fork
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. **Open** a Pull Request against `main`
 
-### Contribution Guidelines
-- Follow PEP 8 style guide
-- Add docstrings to all functions
-- Include unit tests for new features
-- Update README with new features
-- Maintain backward compatibility
+### Guidelines
+
+- Follow **PEP 8** style conventions
+- Add **docstrings** to all public functions and classes
+- Include **unit tests** for new features where possible
+- Keep **backward compatibility** in mind
+- Update the README if you add or change functionality
 
 ---
 
 ## 📝 License
 
-This project is part of a **College Project** for Automated Machine Learning research and development.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -615,39 +709,23 @@ This project is part of a **College Project** for Automated Machine Learning res
 
 ---
 
-## 📞 Support & Issues
+## 🆘 Support
 
-For issues, bugs, or questions:
-
-1. Check the [logs directory](./logs/) for detailed error information
-2. Review the documentation in relevant modules
-3. Check existing GitHub issues
-4. Create a new issue with:
-   - Clear description
-   - Steps to reproduce
-   - Error logs
-   - Expected behavior
-
----
-
-## 🎯 Roadmap
-
-- [ ] Web UI for model management
-- [ ] Automated model deployment
-- [ ] Real-time monitoring & logging
-- [ ] Advanced hyperparameter optimization
-- [ ] Support for more data formats (Parquet, JSON)
-- [ ] Model explainability (SHAP, LIME)
-- [ ] Batch processing capabilities
+| Channel | Details |
+|---|---|
+| **Bug Reports** | Open a [GitHub Issue](https://github.com/Mayuresh-Bairagi/automl/issues) with steps to reproduce, error logs, and expected behaviour |
+| **Logs** | Check `./logs/` for structured JSON logs with timestamps and full tracebacks |
+| **API Docs** | Visit `http://localhost:8000/docs` for the interactive Swagger UI |
 
 ---
 
 <div align="center">
 
-**[⬆ back to top](#automl-automated-machine-learning-framework)**
+**[⬆ Back to Top](#automl--automated-machine-learning-framework)**
 
-Made with ❤️ for data science
+<br/>
+
+Made with ❤️ for the data science community
 
 </div>
-
 
