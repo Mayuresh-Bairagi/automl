@@ -25,8 +25,24 @@ from src.Classifier.MLClassifier import AutoMLClassifier
 from src.agent.automl_agent import AutoMLAgent
 from src.data_qa.dataset_qa import DatasetQA
 
+# ---------------------------------------------------------------------------
+# Application setup
+# ---------------------------------------------------------------------------
 
-app = FastAPI(title="AutoML Backend", description="FastAPI backend for AutoML project")
+_MAX_UPLOAD_BYTES = 50 * 1024 * 1024   # 50 MB
+_MIN_ROWS = 10
+_MIN_COLS = 2
+_ALLOWED_EXTENSIONS = {".csv", ".xlsx", ".xls"}
+
+app = FastAPI(
+    title="AutoML API",
+    description=(
+        "Enterprise-grade AutoML backend: upload a dataset, run EDA, "
+        "train multiple ML models with automated hyperparameter tuning, "
+        "and interact with your data through a natural-language Q&A interface."
+    ),
+    version="1.0.0",
+)
 
 origins = [
     "http://localhost",
@@ -50,46 +66,85 @@ app.mount("/data", StaticFiles(directory=folder_path), name="data")
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the AutoML API"}
+    """Health-check endpoint."""
+    return {"message": "Welcome to the AutoML API", "status": "ok"}
 
 
-@app.post("/upload")
+@app.post("/upload", summary="Upload a CSV or Excel dataset and trigger feature engineering")
 async def upload_file(file: UploadFile = File(...)):
+    """Accept a CSV or Excel file, run automated feature engineering, and return
+    a ``session_id`` that must be passed to all subsequent endpoints.
+
+    Limits
+    ------
+    * Maximum file size: 50 MB
+    * Minimum dataset: 10 rows × 2 columns
+    * Supported formats: ``.csv``, ``.xlsx``, ``.xls``
+    """
     try:
+        suffix = Path(file.filename).suffix.lower()
+        if suffix not in _ALLOWED_EXTENSIONS:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"Unsupported file type '{suffix}'. "
+                    f"Accepted formats: {', '.join(_ALLOWED_EXTENSIONS)}"
+                ),
+            )
+
         contents = await file.read()
 
-        if file.filename.endswith(".csv"):
+        if len(contents) > _MAX_UPLOAD_BYTES:
+            raise HTTPException(
+                status_code=413,
+                detail=f"File exceeds maximum allowed size of {_MAX_UPLOAD_BYTES // (1024*1024)} MB.",
+            )
+
+        if suffix == ".csv":
             df = pd.read_csv(BytesIO(contents))
-        elif file.filename.endswith((".xlsx", ".xls")):
-            df = pd.read_excel(BytesIO(contents))
         else:
-            raise HTTPException(status_code=400, detail="Unsupported file type. Please upload CSV or Excel.")
+            df = pd.read_excel(BytesIO(contents))
+
+        if df.shape[0] < _MIN_ROWS:
+            raise HTTPException(
+                status_code=422,
+                detail=f"Dataset has only {df.shape[0]} rows; at least {_MIN_ROWS} are required.",
+            )
+        if df.shape[1] < _MIN_COLS:
+            raise HTTPException(
+                status_code=422,
+                detail=f"Dataset has only {df.shape[1]} columns; at least {_MIN_COLS} are required.",
+            )
 
         fe = FeatureEngineer1(df)
         df, session_id = fe.generate_features()
 
         preview = df.head(10).to_dict(orient="records")
-        print(f"[UPLOAD] File: {file.filename}, Shape: {df.shape}, Session: {session_id}")
 
         return {
             "filename": file.filename,
+            "shape": {"rows": df.shape[0], "columns": df.shape[1]},
             "preview": preview,
-            "session_id": session_id
+            "session_id": session_id,
         }
 
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
 
-@app.post("/eda")
+@app.post("/eda", summary="Generate an interactive HTML EDA report for a session")
 async def eda(request: requestEDA):
+    """Generate a `ydata-profiling` HTML report for the processed dataset
+    associated with *session_id* and return its URL.
+    """
     try:
         session_id = request.session_id
         eda_obj = EDA(session_id=session_id)
         html_path = eda_obj.generate_report()
 
         html_url = f"http://127.0.0.1:8000/data/{session_id}/index.html"
-        print(f"[EDA] Report generated: {html_url}")
 
         return {"session_id": session_id, "eda_html_path": html_url}
 
@@ -97,61 +152,63 @@ async def eda(request: requestEDA):
         raise HTTPException(status_code=500, detail=f"EDA generation failed: {str(e)}")
 
 
-@app.post("/ml-models")
+@app.post("/ml-models", summary="Train ML models for a session")
 async def ml_model(request: request_ml_models):
+    """Detect the target variable, select features, train a suite of models with
+    GridSearchCV, and return per-model evaluation metrics.
+
+    The response includes additional metrics beyond accuracy/R² (precision,
+    recall, ROC-AUC for classifiers; MAE, RMSE for regressors) as well as
+    cross-validation scores for a more robust performance estimate.
+    """
     try:
         session_id = request.session_id
         problem_statement = request.problem_statement
         target_var_handler = TargetVariable(session_id=session_id)
         result, df = target_var_handler.get_target_variable(problem_statement)
 
-        problem_statement_type = result['problem_type']
+        problem_statement_type = result["problem_type"]
 
         if problem_statement_type.lower() == "regression":
             automl_regressor = AutoMLRegressor(
                 session_id=session_id,
                 problem_statement=problem_statement,
                 result=result,
-                df=df
+                df=df,
+            )
+            results_df, trained_models, model_paths = automl_regressor.train_models(
+                skip_heavy=True
             )
 
-            results_df, trained_models, model_paths = automl_regressor.train_models(skip_heavy=True)
-
-            results_dict = results_df.to_dict(orient="records")
-
-            
-
-            print(f"[ML MODEL] Training completed. Models: {len(model_paths)}")
-
-            return {
-                "session_id": session_id,
-                "results": results_dict,
-                "model_paths": model_paths
-            }
-        
         elif problem_statement_type.lower() == "classification":
             automl_classifier = AutoMLClassifier(
                 session_id=session_id,
                 problem_statement=problem_statement,
                 result=result,
-                df=df
+                df=df,
+            )
+            results_df, trained_models, model_paths = automl_classifier.train_models(
+                skip_heavy=True
             )
 
-            results_df, trained_models, model_paths = automl_classifier.train_models(skip_heavy=True)
-
-            results_dict = results_df.to_dict(orient="records")
-
-            print(f"[ML MODEL] Training completed. Models: {len(model_paths)}")
-
-            return {
-                "session_id": session_id,
-                "results": results_dict,
-                "model_paths": model_paths
-            }
-        
         else:
-            raise HTTPException(status_code=400, detail=f"Unsupported problem type: {problem_statement_type}")
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unsupported problem type: {problem_statement_type}",
+            )
 
+        results_dict = results_df.to_dict(orient="records")
+
+        return {
+            "session_id": session_id,
+            "problem_type": problem_statement_type,
+            "target_variable": result.get("target_variable"),
+            "results": results_dict,
+            "model_paths": model_paths,
+        }
+
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Model training failed: {str(e)}")
 
