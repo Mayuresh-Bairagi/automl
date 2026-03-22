@@ -96,7 +96,7 @@ pip install -e .
 # Create .env file
 echo "GOOGLE_API_KEY=your_key_here" > .env
 echo "GROQ_API_KEY=your_key_here" >> .env
-echo "LLM_PROVIDER=google" >> .env
+echo "LLM_PROVIDER=groq" >> .env
 ```
 
 ### 3. Start the Server
@@ -146,7 +146,7 @@ cp .env.example .env
 # Edit .env with your API keys
 GOOGLE_API_KEY=your_google_api_key
 GROQ_API_KEY=your_groq_api_key
-LLM_PROVIDER=google  # or 'groq'
+LLM_PROVIDER=groq  # or 'google'
 ```
 
 4. **Verify Installation**
@@ -416,7 +416,7 @@ html_path = eda.generate_report()
 # LLM Configuration
 GOOGLE_API_KEY=your_google_api_key_here
 GROQ_API_KEY=your_groq_api_key_here
-LLM_PROVIDER=google              # 'google' or 'groq'
+LLM_PROVIDER=groq              # 'groq' or 'google'
 
 # Data Configuration
 DATA_STORAGE_PATH=./data/datasetAnalysis
