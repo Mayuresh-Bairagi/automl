@@ -16,8 +16,11 @@ ipykernel
 structlog
 langchain
 langchain_community
+langchain_classic
 langchain_google_genai
 langchain_groq
 python-multipart
+langgraph
+python-dotenv
 
 -e .
