@@ -10,6 +10,7 @@ joblib
 matplotlib
 seaborn
 plotly
+ydata-profiling
 pycaret
 openpyxl
 ipykernel

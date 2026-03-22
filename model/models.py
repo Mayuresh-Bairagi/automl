@@ -14,7 +14,7 @@ class DataTypeRecommendation(BaseModel):
     columns: List[ColumnRecommendation]
 
 class FeatureEngineering(BaseModel):
-    remarke: Literal["yes", "no"]
+    remake: Literal["yes", "no"]
     code: str
 
 

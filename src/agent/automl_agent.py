@@ -172,7 +172,6 @@ def _generate_report(state: AgentState) -> AgentState:
             "all_results": training_results,
             "model_paths": state.get("model_paths") or {},
         }
-
         log.info("Report generated", best_model=best_model, best_score=best_score)
         return {**state, "report": report, "status": "ok"}
     except Exception as exc:
