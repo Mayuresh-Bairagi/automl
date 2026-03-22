@@ -1,3 +1,9 @@
 test.ipynb
 venv
 .env
+__pycache__/
+*.py[cod]
+*.pyo
+logs/
+data/datasetAnalysis/test_*/
+*.egg-info/
