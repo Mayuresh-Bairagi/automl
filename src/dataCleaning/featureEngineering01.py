@@ -6,7 +6,7 @@ from utils.model_loader import ModelLoader
 from logger.customlogger import CustomLogger
 from pathlib import Path
 from langchain_core.output_parsers import JsonOutputParser
-from langchain.output_parsers import OutputFixingParser
+from langchain_classic.output_parsers import OutputFixingParser
 from Propmt.propmt_lib import PROMPT_REGISTRY
 from typing import List, Dict, Union
 from src.datasetAnalysis.data_type_analysis import DataTypeAnalyzer

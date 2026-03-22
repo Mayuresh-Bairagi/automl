@@ -1,4 +1,4 @@
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 
 change_data_type = ChatPromptTemplate.from_template("""
 You are a data type inference engine. 
@@ -109,9 +109,52 @@ Instructions:
 6. Output **only valid JSON** matching FeatureSelectionOutput.
 """)
 
+dataset_qa_prompt = ChatPromptTemplate.from_template("""
+You are a Python / pandas expert helping a data analyst answer questions about a dataset.
+
+Dataset schema:
+{schema}
+
+The analyst's question is:
+{question}
+
+Instructions:
+1. Write a concise pandas snippet that answers the question.
+2. Store the final answer in a variable called `result`.
+3. Wrap all code in a single ```python ... ``` block.
+4. Do NOT import any libraries — `pd`, `np`, and `df` are already available.
+5. Do NOT read or write any files; operate only on `df`.
+6. Keep the snippet short and focused; avoid unnecessary computation.
+7. If the question cannot be answered with the available columns, set
+   `result = "Cannot answer: <reason>"`.
+
+Example:
+Question: "What is the average price?"
+Answer:
+```python
+result = df['Price'].mean()
+```
+""")
+
+dashboard_chart_recommendation_prompt = ChatPromptTemplate.from_template("""
+You are a data visualisation expert. Given the dataset schema below, recommend the
+most insightful chart types from this list:
+["distribution", "correlation", "scatter", "bar", "missing_values", "boxplot"]
+
+Dataset schema:
+{schema}
+
+Return a JSON array of chart type strings (e.g. ["distribution", "correlation"]).
+Only include chart types that would be meaningful for this dataset.
+Return ONLY the JSON array — no explanation, no markdown.
+""")
+
+
 PROMPT_REGISTRY = {
     'change_data_type': change_data_type,
     'feature_engineering' : feature_engineering_prompt,
     'target_variable' : target_variable_prompt,
-    'feature_selection' : feature_selection_prompt
+    'feature_selection' : feature_selection_prompt,
+    'dataset_qa' : dataset_qa_prompt,
+    'dashboard_chart_recommendation' : dashboard_chart_recommendation_prompt,
 }

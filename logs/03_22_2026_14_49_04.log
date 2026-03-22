@@ -1,0 +1,3 @@
+{"session_id": "test_integration_01", "timestamp": "2026-03-22T14:49:04.817727Z", "level": "InteractiveDashboard initialised"}
+{"session_id": "test_integration_01", "shape": "(100, 6)", "timestamp": "2026-03-22T14:49:04.819565Z", "level": "Dataset loaded for dashboard"}
+{"session_id": "test_integration_01", "chart_count": 12, "timestamp": "2026-03-22T14:49:05.221406Z", "level": "Dashboard charts generated"}

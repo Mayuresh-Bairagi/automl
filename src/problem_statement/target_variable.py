@@ -1,8 +1,8 @@
 from Propmt.propmt_lib import PROMPT_REGISTRY
-from langchain.output_parsers import PydanticOutputParser
+from langchain_classic.output_parsers import PydanticOutputParser
 from model.models import * 
 from langchain_core.output_parsers import JsonOutputParser
-from langchain.output_parsers import OutputFixingParser 
+from langchain_classic.output_parsers import OutputFixingParser 
 from utils.model_loader import ModelLoader
 import os 
 import sys

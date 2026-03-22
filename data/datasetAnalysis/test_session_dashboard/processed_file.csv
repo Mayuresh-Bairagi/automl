@@ -1,0 +1,6 @@
+age,salary,dept,active
+25,50000,HR,True
+30,60000,IT,True
+35,70000,IT,False
+40,80000,HR,True
+45,90000,Finance,False
